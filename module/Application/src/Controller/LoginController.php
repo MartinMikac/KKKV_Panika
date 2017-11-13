@@ -13,9 +13,19 @@ use Zend\View\Model\ViewModel;
 
 /**
  * Description of LoginController
+ * 
+ * modul pro zajištění přihlášení uživatelů
  *
  * @author martin.mikac
  */
 class LoginController extends AbstractActionController {
-    //put your code here
+
+    public function indexAction() {
+
+            $vm = new ViewModel();
+            $this->layout('layout/login');
+            
+            
+    }
+
 }

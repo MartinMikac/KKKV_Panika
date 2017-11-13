@@ -25,11 +25,9 @@ class IndexController extends AbstractActionController {
         // pokud není autorizován pak přesměrovat na přihlášení
         if ($this->isAuthorised == false) {
 
-            $vm = new ViewModel();
-
-            $this->layout('layout/login');
-            return §vm;
+            return $this->redirect()->toRoute('login', ['action' => 'index']);
         } else {
+
             $vm = new ViewModel();
             return $vm;
         }
