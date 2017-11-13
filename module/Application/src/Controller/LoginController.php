@@ -10,6 +10,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Form\LoginForm;
 
 /**
  * Description of LoginController
@@ -43,7 +44,7 @@ class LoginController extends AbstractActionController {
 
     public function prihlaseniAction() {
 
-
+          $formular = new LoginForm();
         //nastavení Layoutu pro přihlašování
         $this->layout('layout/login');
 
@@ -55,8 +56,13 @@ class LoginController extends AbstractActionController {
             // ... Do something with the data ...
             var_dump($data);
             
-            return new ViewModel();
+
         }
+        
+            // Pass form variable to view
+            return new ViewModel([
+                  'formular' => $formular
+            ]);
     }
 
 }

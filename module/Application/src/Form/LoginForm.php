@@ -31,9 +31,50 @@ class LoginForm extends Form {
 
         // (Optionally) set action for this form
         //$this->setAttribute('action', '/login');
+        // Add form elements
+        $this->addElements();
 
-        //$this->addElements();
+
         //$this->addInputFilter();  
+    }
+
+    // This method adds elements to form (input fields and 
+    // submit button).
+    private function addElements() {
+
+        // Přidání pole jméno
+        $this->add([
+            'type' => 'text',
+            'name' => 'jmeno',
+            'attributes' => [
+                'id' => 'inputJmeno'
+            ],
+            'options' => [
+                'label' => 'jméno',
+            ],
+        ]);
+
+        // přidání pole Heslo
+        $this->add([
+            'type' => 'password',
+            'name' => 'heslo',
+            'attributes' => [
+                'id' => 'inputHeslo'
+            ],
+            'options' => [
+                'label' => 'Heslo',
+            ],
+        ]);
+
+
+        // Odesílací tlačítko
+        $this->add([
+            'type' => 'submit',
+            'name' => 'submit',
+            'attributes' => [
+                'value' => 'Přihlásit se',
+            ],
+        ]);
     }
 
 }
