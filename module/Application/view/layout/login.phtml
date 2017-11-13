@@ -1,0 +1,58 @@
+<?= $this->doctype() ?>
+
+<html lang="cs">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('Systém paniky v KKKV')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?=
+                $this->headMeta()
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?=
+                $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+                ->prependStylesheet($this->basePath('css/style.css'))
+                //->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                ->prependStylesheet($this->basePath('css/signin.css'))
+        ?>
+
+        <!-- Scripts -->
+        <?=
+                $this->headScript()
+                //->prependFile($this->basePath('js/bootstrap.min.js'))
+                ->prependFile($this->basePath('js/bootstrap.bundle.min.js'))
+                ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+        ?>
+    </head>
+    <body>
+
+        <div class="container">
+
+            <form class="form-signin">
+                <h2 class="form-signin-heading">Prosím, příhlašte se</h2>
+                <label for="inputEmail" class="sr-only">přihlasovací jméno</label>
+                <input type="text" id="inputEmail" class="form-control" placeholder="Přihlašovací jméno" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="heslo" required>
+
+                <?php
+                /*
+                 * checkbox pro zapamatování
+                 * 
+                  <div class="checkbox">
+                  <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+                  </label>
+                  </div>
+                 */
+                ?>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+
+        </div> <!-- /container -->
+    </body>
+</html>
