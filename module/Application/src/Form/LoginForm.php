@@ -8,8 +8,8 @@
 namespace Application\Form;
 
 use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
-use Application\Entity\Post;
+//use Zend\InputFilter\InputFilter;
+//use Application\Entity\Post;
 
 /**
  * Description of LoginForm
@@ -51,9 +51,24 @@ class LoginForm extends Form {
             ],
             'options' => [
                 'label' => 'jméno',
+                'placeholder' => 'Přihlašovací jméno',
+                'class' => 'form-control'
             ],
         ]);
 
+        /*
+         * type="text" 
+         * name="jmeno" 
+         * id="inputJmeno" 
+         * class="form-control" 
+         * placeholder="Přihlašovací jméno" 
+         * 
+         * required 
+         * autofocus
+         */
+                
+                
+                
         // přidání pole Heslo
         $this->add([
             'type' => 'password',

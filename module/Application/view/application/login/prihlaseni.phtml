@@ -1,0 +1,45 @@
+<?php
+$form->get('jmeno')->setAttributes([
+            'class' => 'form-control',
+            'placeholder' => 'Přihlašovací jméno',
+            'required' => true,
+            'autofocus' => true
+        ])
+        ->setLabelAttributes([
+            'class' => 'sr-only'
+        ]);
+
+$form->get('heslo')->setAttributes([
+            'class' => 'form-control',
+            'placeholder' => 'Heslo',
+            'required' => true,
+        ])
+        ->setLabelAttributes([
+            'class' => 'sr-only'
+        ]);
+
+
+//            $formular = $this->formular;
+//            echo $this->formElement()->render($formular->get('jmeno')); 
+// We assume that the form model is stored in $form variable.
+// Render the E-mail field with the render() method.
+//echo $this->formElement()->render($formular->get('email'));
+// The same, but with __invoke
+?>
+
+<form class="form-signin" name="signin-form" method="POST">
+    <h2 class="form-signin-heading">Prosím, přihlašte se</h2>
+
+    <?= $this->formLabel($form->get('jmeno')); ?>
+    <?= $this->formElement($form->get('jmeno')); ?>
+
+
+    <?= $this->formLabel($form->get('heslo')); ?>
+    <?= $this->formElement($form->get('heslo')); ?>
+
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Přihlásit se
+    </button>
+
+</form>

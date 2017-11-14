@@ -36,7 +36,7 @@ class LoginController extends AbstractActionController {
 
             // ... Do something with the data ...
             var_dump($data);
-            
+
             var_dump("INDEX!!!!");
             return new ViewModel();
         }
@@ -44,7 +44,7 @@ class LoginController extends AbstractActionController {
 
     public function prihlaseniAction() {
 
-          $formular = new LoginForm();
+        $formular = new LoginForm();
         //nastavení Layoutu pro přihlašování
         $this->layout('layout/login');
 
@@ -54,15 +54,13 @@ class LoginController extends AbstractActionController {
             $data = $this->params()->fromPost();
 
             // ... Do something with the data ...
-            var_dump($data);
-            
-
+//            var_dump($data);
         }
-        
-            // Pass form variable to view
-            return new ViewModel([
-                  'formular' => $formular
-            ]);
+
+        // Pass form variable to view
+        return new ViewModel([
+            'form' => $formular
+        ]);
     }
 
 }
