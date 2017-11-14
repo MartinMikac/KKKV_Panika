@@ -31,25 +31,22 @@
     <body>
 
         <div class="container">
+            
+            <?php 
+            
+//            $formular = $this->formular;
+            
+//            echo $this->formElement()->render($formular->get('jmeno')); 
+            
+            
+            ?>
 
-            <form class="form-signin">
+            <form class="form-signin" name="signin-form" method="POST">
                 <h2 class="form-signin-heading">Prosím, příhlašte se</h2>
                 <label for="inputEmail" class="sr-only">přihlasovací jméno</label>
-                <input type="text" id="inputEmail" class="form-control" placeholder="Přihlašovací jméno" required autofocus>
+                <input type="text" name="jmeno" id="inputJmeno" class="form-control" placeholder="Přihlašovací jméno" required autofocus>
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="heslo" required>
-
-                <?php
-                /*
-                 * checkbox pro zapamatování
-                 * 
-                  <div class="checkbox">
-                  <label>
-                  <input type="checkbox" value="remember-me"> Remember me
-                  </label>
-                  </div>
-                 */
-                ?>
+                <input type="password" name="heslo" id="inputHeslo" class="form-control" placeholder="heslo" required>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
                     Přihlásit se
                 </button>
