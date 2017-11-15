@@ -7,3 +7,4 @@ phpunit.xml
 /nbproject/private/
 config/autoload/development.local.php.dist
 config/autoload/development.local.php.dist
+config/autoload/development.local.php.dist
