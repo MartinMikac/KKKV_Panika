@@ -18,7 +18,7 @@ class IndexController extends AbstractActionController {
      *
      * @var $isAuthorised type
      */
-    public $isAuthorised = false;
+    public $isAuthorised = true;
 
     public function indexAction() {
 
