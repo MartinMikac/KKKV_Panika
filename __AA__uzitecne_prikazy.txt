@@ -1,0 +1,26 @@
+
+https://github.com/mysql-workbench-schema-exporter/mysql-workbench-schema-exporter
+
+ 
+ *
+ ****************** vygeneruje entity z databáze ******************************
+ *
+ 
+ ./vendor/bin/doctrine orm:convert-mapping --namespace="Application\Entity\" --force  --from-database annotation ./module/Application/src/
+ 
+ *
+ *
+ *
+ *
+ 
+ PS C:\__GIT_SOURCE_\KKKV_Panika> ./vendor/bin/doctrine orm:convert-mapping --namespace="Application\Entity\" --force  --from-database annotation ./module/Application/src/
+Processing entity "Application\Entity\Admins"
+Processing entity "Application\Entity\Alerts"
+Processing entity "Application\Entity\Onlines"
+Processing entity "Application\Entity\Sessions"
+
+Exporting "annotation" mapping information to "C:\__GIT_SOURCE_\KKKV_Panika\module\Application\src"
+ 
+ 
+ 
+ ./vendor/bin/doctrine orm:generate-entities ./module/Application/src/ --generate-annotations=true

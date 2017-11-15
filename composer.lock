@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1d905072020863a59f5324252fecc04",
+    "content-hash": "22de79f8eca41302a30cf12f3b242519",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -636,6 +636,126 @@
                 "orm"
             ],
             "time": "2017-10-23T18:21:04+00:00"
+        },
+        {
+            "name": "mysql-workbench-schema-exporter/doctrine2-exporter",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mysql-workbench-schema-exporter/doctrine2-exporter.git",
+                "reference": "939a015c4cb8623dd282040cfffeb85725857ab4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mysql-workbench-schema-exporter/doctrine2-exporter/zipball/939a015c4cb8623dd282040cfffeb85725857ab4",
+                "reference": "939a015c4cb8623dd282040cfffeb85725857ab4",
+                "shasum": ""
+            },
+            "require": {
+                "mysql-workbench-schema-exporter/mysql-workbench-schema-exporter": "^3.0 || dev-master",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MwbExporter\\Formatter\\Doctrine2\\": "lib/MwbExporter/Formatter/Doctrine2/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes Mueller",
+                    "email": "circus2@web.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Toha",
+                    "email": "tohenk@yahoo.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Robert Vock",
+                    "email": "robertvock82@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "MySQL Workbench Schema Exporter for Doctrine 2",
+            "homepage": "https://github.com/mysql-workbench-schema-exporter/doctrine2-exporter",
+            "keywords": [
+                "cli",
+                "database",
+                "doctrine",
+                "mysql",
+                "mysql workbench"
+            ],
+            "time": "2017-01-17T09:51:46+00:00"
+        },
+        {
+            "name": "mysql-workbench-schema-exporter/mysql-workbench-schema-exporter",
+            "version": "v3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mysql-workbench-schema-exporter/mysql-workbench-schema-exporter.git",
+                "reference": "878745003196452d397d17881890f78a070180c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mysql-workbench-schema-exporter/mysql-workbench-schema-exporter/zipball/878745003196452d397d17881890f78a070180c5",
+                "reference": "878745003196452d397d17881890f78a070180c5",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "^1.0.0",
+                "php": ">=5.4.0"
+            },
+            "bin": [
+                "bin/mysql-workbench-schema-export",
+                "bin/update-sql-reserved-words"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "MwbExporter\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes Mueller",
+                    "email": "circus2@web.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Toha",
+                    "email": "tohenk@yahoo.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Robert Vock",
+                    "email": "robertvock82@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "MySQL Workbench Schema Exporter",
+            "homepage": "https://github.com/mysql-workbench-schema-exporter/mysql-workbench-schema-exporter",
+            "keywords": [
+                "cli",
+                "database",
+                "doctrine",
+                "extjs",
+                "mysql",
+                "mysql workbench",
+                "propel",
+                "sequelizejs",
+                "zend"
+            ],
+            "time": "2017-01-17T10:49:34+00:00"
         },
         {
             "name": "psr/container",

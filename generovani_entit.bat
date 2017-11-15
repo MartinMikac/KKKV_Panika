@@ -1,0 +1,1 @@
+.\vendor\bin\mysql-workbench-schema-export .\database_schema\panika_schema.mwb --config=export.json
