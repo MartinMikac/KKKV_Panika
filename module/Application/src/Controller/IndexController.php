@@ -37,19 +37,35 @@ class IndexController extends AbstractActionController {
     public function indexAction() {
 
         // pokud není autorizován pak přesměrovat na přihlášení
-        if ($this->isAuthorised == false) {
+        /*        if ($this->isAuthorised == false) {
 
-            return $this->redirect()->toRoute('login', ['action' => 'index']);
-        } else {
+          return $this->redirect()->toRoute('login', ['action' => 'index']);
+          } else {
 
-            $vm = new ViewModel();
-            return $vm;
-        }
+          $vm = new ViewModel();
+          return $vm;
+          }
+         */
 
-        $online = $this->entityManager->getRepository(Online::class);
+        //$entityManager = $container->get('doctrine.entitymanager.orm_default');   
+//        $online = $entityManager->getRepository(Online::class)->findAll();
+
+        $onlines = $this->entityManager->getRepository(Online::class)->findAll();
+        
+        $kus = $this->entityManager->getRepository(Online::class)->findOneByIdOnline(117);
         //    $user = $this->entityManager->getRepository(User::class)
         //             ->findOneByEmail($this->identity());
-        
+
+        //echo $online;
+        //var_dump($this->entityManager->getRepository(Online::class))->findAlll();
+
+        //echo "</br></br></br>TEST";
+
+        return new ViewModel([
+            'onlines' => $onlines,
+            'kus' => $kus,
+        ]);
+        // Find the post by ID
     }
 
 }

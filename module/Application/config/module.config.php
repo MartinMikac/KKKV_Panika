@@ -57,7 +57,7 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-        Service\AdminManager::class => Service\Factory\AdminManagerFactory::class,
+            Service\AdminManager::class => Service\Factory\AdminManagerFactory::class,
         ],
     ],
     'view_manager' => [

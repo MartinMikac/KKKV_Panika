@@ -9,7 +9,7 @@ use Zend\Filter\StaticFilter;
  * The PostManager service is responsible for adding new posts, updating existing
  * posts, adding tags to post, etc.
  */
-class AdminManager
+class OnlineManager
 {
     /**
      * Entity manager.

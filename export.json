@@ -19,7 +19,7 @@
         "skipManyToManyTables": true,
         "bundleNamespace": "",
         "entityNamespace": "Application\\Entity",
-        "repositoryNamespace": "",
+        "repositoryNamespace": "Application\\Repository",
         "useAutomaticRepository": true,
         "skipColumnWithRelation": false,
         "relatedVarNameFormat": "%name%%related%",
