@@ -10,3 +10,4 @@ config/autoload/development.local.php.dist
 config/autoload/development.local.php.dist
 database_schema/panika_schema.mwb.bak
 database_schema/panika_schema.mwb.beforefix
+composer.lock

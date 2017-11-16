@@ -10,6 +10,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Entity\Online;
 
 class IndexController extends AbstractActionController {
 
@@ -19,6 +20,19 @@ class IndexController extends AbstractActionController {
      * @var $isAuthorised type
      */
     public $isAuthorised = true;
+
+    /**
+     * Entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * Constructor. Its purpose is to inject dependencies into the controller.
+     */
+    public function __construct($entityManager) {
+        $this->entityManager = $entityManager;
+    }
 
     public function indexAction() {
 
@@ -31,6 +45,10 @@ class IndexController extends AbstractActionController {
             $vm = new ViewModel();
             return $vm;
         }
+
+        $online = $this->entityManager->getRepository(Online::class);
+        //    $user = $this->entityManager->getRepository(User::class)
+        //             ->findOneByEmail($this->identity());
     }
 
 }

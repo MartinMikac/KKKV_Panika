@@ -32,7 +32,11 @@ class LoginController extends AbstractActionController {
     /**
      * Constructor. Its purpose is to inject dependencies into the controller.
 s     */
-    public function __construct($entityManager) {
+    //chybná konstrukce!!
+    //public function __construct($entityManager) {
+    
+    public function __construct() {
+    
         $this->entityManager = $entityManager;
     }
 
