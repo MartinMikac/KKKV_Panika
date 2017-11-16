@@ -49,6 +49,7 @@ class IndexController extends AbstractActionController {
         $online = $this->entityManager->getRepository(Online::class);
         //    $user = $this->entityManager->getRepository(User::class)
         //             ->findOneByEmail($this->identity());
+        
     }
 
 }

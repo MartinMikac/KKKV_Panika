@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Local Configuration Override
  *
@@ -10,7 +11,6 @@
  * in ZendSkeletonApplication. This is a good practice, as it prevents sensitive
  * credentials from accidentally being committed into version control.
  */
-
 use Doctrine\DBAL\Driver\PDOMySql\Driver as PDOMySqlDriver;
 
 return [
@@ -19,12 +19,12 @@ return [
             'orm_default' => [
                 'driverClass' => PDOMySqlDriver::class,
                 'params' => [
-                    'host'     => '127.0.0.1',                    
-                    'user'     => 'userdemo',
-                    'password' => '<password>',
-                    'dbname'   => 'userdemo',
+                    'host' => '192.168.1.104',
+                    'user' => 'root',
+                    'password' => 'toor',
+                    'dbname' => 'panika',
                 ]
-            ],            
-        ],        
+            ],
+        ],
     ],
 ];
