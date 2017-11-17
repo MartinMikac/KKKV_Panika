@@ -25,6 +25,17 @@
 
 <?php endforeach; ?>
 
+<?php foreach($onlines as $online): ?>
+
+<h3>
+  <a href="#">
+      <?php echo $this->escapeHtml($online->getStatus());  ?>
+      <?php echo $this->escapeHtml($online->getIdOnline()); ?>
+  </a>    
+</h3>
+
+<?php endforeach; ?>
+
 
 <table class="table">
   <thead class="thead-inverse">

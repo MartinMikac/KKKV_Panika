@@ -48,17 +48,25 @@ class IndexController extends AbstractActionController {
          */
 
         //$entityManager = $container->get('doctrine.entitymanager.orm_default');   
-//        $online = $entityManager->getRepository(Online::class)->findAll();
+        //$online = $entityManager->getRepository(Online::class)->findAll();
+        //$onlines = $this->entityManager->getRepository(Online::class)->findAll();
 
-        $onlines = $this->entityManager->getRepository(Online::class)->findAll();
+        //$onlines = $this->entityManager->getRepository(Online::class)->findAllByStatus("normalni");
         
-        $kus = $this->entityManager->getRepository(Online::class)->findOneByIdOnline(117);
+        $onlines = $this->entityManager->getRepository(Online::class)->NajdiOnline(1)->getResult();
+        
+        //$vystup = $onlines->getSQL();
+        
+        var_dump($vystup);
+        
+        
+
+
+        //$kus = $this->entityManager->getRepository(Online::class)->findByIdOnline(1);
         //    $user = $this->entityManager->getRepository(User::class)
         //             ->findOneByEmail($this->identity());
-
         //echo $online;
         //var_dump($this->entityManager->getRepository(Online::class))->findAlll();
-
         //echo "</br></br></br>TEST";
 
         return new ViewModel([
