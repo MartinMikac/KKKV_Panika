@@ -53,11 +53,13 @@ class IndexController extends AbstractActionController {
 
         //$onlines = $this->entityManager->getRepository(Online::class)->findAllByStatus("normalni");
         
+        
         $onlines = $this->entityManager->getRepository(Online::class)->NajdiOnline(1)->getResult();
+        
         
         //$vystup = $onlines->getSQL();
         
-        var_dump($vystup);
+        //var_dump($onlines);
         
         
 

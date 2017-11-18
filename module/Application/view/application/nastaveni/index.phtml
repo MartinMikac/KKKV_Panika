@@ -1,0 +1,22 @@
+
+
+<div>
+    Nastavení uživatele
+</div>
+
+<form class="form-signin" name="signin-form" method="POST">
+    <h2 class="form-signin-heading">Prosím, přihlašte se</h2>
+
+    <?= $this->formLabel($form->get('cele_jmeno')); ?>
+    <?= $this->formElement($form->get('cele_jmeno')); ?>
+
+
+    <?= $this->formLabel($form->get('heslo')); ?>
+    <?= $this->formElement($form->get('heslo')); ?>
+
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Přihlásit se
+    </button>
+
+</form>

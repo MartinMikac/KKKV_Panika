@@ -37,6 +37,16 @@ return [
                     ],
                 ],
             ],
+            'nastaveni' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/nastaveni',
+                    'defaults' => [
+                        'controller' => Controller\NastaveniController::class,
+                        'action' => 'index',
+                    ],
+                ],
+            ],
             'application' => [
                 'type' => Segment::class,
                 'options' => [
@@ -53,6 +63,7 @@ return [
         'factories' => [
             Controller\LoginController::class => InvokableFactory::class,
             Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
+            Controller\NastaveniController::class => Controller\Factory\NastaveniControllerFactory::class,
         ],
     ],
     'service_manager' => [
