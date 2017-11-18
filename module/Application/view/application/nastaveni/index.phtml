@@ -1,22 +1,172 @@
+<?php
+$form->get('cele_jmeno')->setAttributes([
+            'class' => 'form-control form-control-lg',
+            'placeholder' => 'Celé jméno',
+            'required' => true,
+            'autofocus' => true
+        ])
+        ->setLabelAttributes([
+            'class' => 'col-sm-2 col-form-label col-form-label-lg'
+        ]);
+
+$form->get('umisteni')->setAttributes([
+            'class' => 'form-control form-control-lg',
+            'placeholder' => 'Oddělení',
+            'required' => true,
+            'autofocus' => true
+        ])
+        ->setLabelAttributes([
+            'class' => 'col-sm-2 col-form-label col-form-label-lg align-content-center'
+        ]);
+
+$form->get('email')->setAttributes([
+            'class' => 'form-control form-control-lg',
+            'placeholder' => 'E-mail',
+            'required' => true,
+            'autofocus' => true
+        ])
+        ->setLabelAttributes([
+            'class' => 'col-sm-2 col-form-label col-form-label-lg'
+        ]);
+
+$form->get('telefon')->setAttributes([
+            'class' => 'form-control form-control-lg',
+            'placeholder' => 'Telefon',
+            'required' => true,
+        ])
+        ->setLabelAttributes([
+            'class' => 'col-sm-2 col-form-label col-form-label-lg'
+        ]);
+
+$form->get('jmeno')->setAttributes([
+            'class' => 'form-control form-control-lg',
+            'placeholder' => 'Jméno',
+            'required' => true,
+        ])
+        ->setLabelAttributes([
+            'class' => 'col-sm-2 col-form-label col-form-label-lg'
+        ]);
 
 
-<div>
-    Nastavení uživatele
+$form->get('heslo')->setAttributes([
+            'class' => 'form-control form-control-lg',
+            'placeholder' => 'Heslo',
+            'required' => true,
+        ])
+        ->setLabelAttributes([
+            'class' => 'col-sm-2 col-form-label col-form-label-lg'
+        ]);
+?>
+
+
+
+
+
+
+<div class="container">
+
+    <h2 class="form-signin-heading offset-lg-2">Nastavení uživatele</h2>
+    <br/>
+
+    <form name="signin-form" method="POST" class="col-9">
+
+        <div class="form-group row">
+            <?= $this->formLabel($form->get('cele_jmeno')); ?>
+                <div class="col-sm-10">
+                    <?= $this->formElement($form->get('cele_jmeno')); ?>
+                </div>
+        </div>
+
+        <div class="form-group row">
+            <?= $this->formLabel($form->get('umisteni')); ?>
+                <div class="col-sm-10">
+                    <?= $this->formElement($form->get('umisteni')); ?>
+                </div>
+        </div>        
+        
+        <div class="form-group row">
+            
+                <?= $this->formLabel($form->get('email')); ?>
+            
+            
+                <div class="col-sm-10">
+                    <?= $this->formElement($form->get('email')); ?>
+                </div>
+        </div>        
+        
+        <div class="form-group row">
+            <?= $this->formLabel($form->get('telefon')); ?>
+                <div class="col-sm-10">
+                    <?= $this->formElement($form->get('telefon')); ?>
+                </div>
+        </div>                
+
+        <div class="form-group row">
+        </div>   
+        <div class="form-group row">
+        </div>   
+        <div class="form-group row">
+        </div>   
+        
+
+        <div class="form-group row">
+            <?= $this->formLabel($form->get('jmeno')); ?>
+            <div class="col-sm-10">
+                <?= $this->formElement($form->get('jmeno')); ?>    
+            </div>
+        </div>    
+
+        <div class="form-group row">
+            <?= $this->formLabel($form->get('heslo')); ?>
+            <div class="col-sm-10">
+                <?= $this->formElement($form->get('heslo')); ?>
+            </div>
+        </div>        
+
+        <div class="form-group row offset-lg-2">
+            <button class="btn btn-lg btn-primary btn-block col-lg-3 " type="submit">
+                Uložit změny
+            </button>
+        </div>
+
+    </form>
 </div>
+<br/><br/><br/>
+<br/><br/><br/>
 
-<form class="form-signin" name="signin-form" method="POST">
-    <h2 class="form-signin-heading">Prosím, přihlašte se</h2>
+    <div class="container">
+        <form>
+            <div class="form-group row">
+                <label for="lgFormGroupInput" class="col-sm-2 col-form-label col-form-label-lg">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control form-control-lg" id="lgFormGroupInput" placeholder="you@example.com">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="smFormGroupInput" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control form-control-sm" id="smFormGroupInput" placeholder="you@example.com">
+                </div>
+            </div>
+        </form>
+    </div>
+<br/><br/><br/><br/><br/><br/>
 
-    <?= $this->formLabel($form->get('cele_jmeno')); ?>
-    <?= $this->formElement($form->get('cele_jmeno')); ?>
+    <form name="signin-form" method="POST">
+        <h2 class="form-signin-heading">Nastavení uživatele</h2>
+
+<?= $this->formLabel($form->get('cele_jmeno')); ?>
+        <?= $this->formElement($form->get('cele_jmeno')); ?>
+
+        <?= $this->formLabel($form->get('jmeno')); ?>
+        <?= $this->formElement($form->get('jmeno')); ?>    
+
+        <?= $this->formLabel($form->get('heslo')); ?>
+        <?= $this->formElement($form->get('heslo')); ?>
 
 
-    <?= $this->formLabel($form->get('heslo')); ?>
-    <?= $this->formElement($form->get('heslo')); ?>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            Přihlásit se
+        </button>
 
-
-    <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Přihlásit se
-    </button>
-
-</form>
+    </form>

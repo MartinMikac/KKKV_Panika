@@ -26,13 +26,11 @@ class NastaveniController extends AbstractActionController {
 
     /**
      * Constructor. Its purpose is to inject dependencies into the controller.
-     * 
-     * */
-    public function __construct() {
-
+     */
+    public function __construct($entityManager) {
         $this->entityManager = $entityManager;
-    }
-
+    }    
+    
     public function indexAction() {
 
 

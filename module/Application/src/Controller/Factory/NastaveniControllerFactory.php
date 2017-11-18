@@ -6,7 +6,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Application\Controller\NastaveniController;
 
 /**
- * This is the factory for IndexController. Its purpose is to instantiate the
+ * This is the factory for NastaveniController. Its purpose is to instantiate the
  * controller and inject dependencies into it.
  */
 class NastaveniControllerFactory implements FactoryInterface

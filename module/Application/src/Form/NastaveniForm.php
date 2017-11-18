@@ -86,19 +86,20 @@ class NastaveniForm extends Form {
 
         // Přidání pole jméno
         $this->add([
-            'type' => 'email',
-            'name' => 'email',
+            'type' => 'text',
+            'name' => 'jmeno',
             'attributes' => [
-                'id' => 'inputEmail'
+                'id' => 'inputJmeno'
             ],
             'options' => [
-                'label' => 'E-mail',
-                'placeholder' => 'E-mail',
+                'label' => 'Přihlašovací jméno',
+                'placeholder' => 'jmeno',
                 'class' => 'form-control'
             ],
         ]);            
         
-        // Přidání pole jméno
+        
+        // Přidání pole telefon
         $this->add([
             'type' => 'text',
             'name' => 'telefon',
