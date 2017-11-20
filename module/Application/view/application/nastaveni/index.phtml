@@ -1,4 +1,7 @@
 <?php
+
+$form = $this->form;
+
 $form->get('cele_jmeno')->setAttributes([
             'class' => 'form-control form-control-lg',
             'placeholder' => 'Celé jméno',
@@ -56,6 +59,8 @@ $form->get('heslo')->setAttributes([
         ->setLabelAttributes([
             'class' => 'col-sm-2 col-form-label col-form-label-lg'
         ]);
+
+$form->prepare();
 ?>
 
 
