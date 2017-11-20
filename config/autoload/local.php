@@ -23,6 +23,7 @@ return [
                     'user' => 'root',
                     'password' => 'toor',
                     'dbname' => 'panika',
+                    'charset'  => 'utf8',
                 ]
             ],
         ],
