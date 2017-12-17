@@ -34,7 +34,7 @@ class AdminManager {
         $post->setTitle($data['title']);
         $post->setContent($data['content']);
         $post->setStatus($data['status']);
-        $currentDate = date('Y-m-d H:i:s');
+        
         $post->setDateCreated($currentDate);
 
         // Add the entity to entity manager.
@@ -51,17 +51,20 @@ class AdminManager {
      * This method allows to update data of a single post.
      */
     public function updateAdmin(\Application\Entity\Admin $admin, $data) {
-        
+
+        $admin->setCeleJmeno($data['cele_jmeno']);
         $admin->setUmisteni($data['umisteni']);
+        $admin->setEmail($data['email']);
+        $admin->setTelefon($data['telefon']);
         
-        //$post->setTitle($data['title']);
-        //$post->setContent($data['content']);
-        //$post->setStatus($data['status']);
+        //$admin->setLastOnline(date('Y-m-d H:i:s'));
+        
+        
 
-        // Add tags to post
-        //$this->addTagsToPost($data['tags'], $post);
+        if (strlen($data['heslo']) > 1) {
+            $admin->setHeslo(password_hash($data['heslo'], PASSWORD_DEFAULT));
+        }
 
-        // Apply changes to database.
         $this->entityManager->flush();
     }
 
