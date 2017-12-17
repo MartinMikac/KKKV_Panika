@@ -22,7 +22,7 @@ class NastaveniForm extends Form {
      */
     public function __construct() {
         // Define form name
-        parent::__construct('signin-form');
+        parent::__construct('nastaveni-form');
 
         // Set POST method for this form
         $this->setAttribute('method', 'post');

@@ -12,7 +12,6 @@ use Zend\View\Model\ViewModel;
 use Application\Form\NastaveniForm;
 use Application\Entity\Admin;
 
-
 /**
  * Description of NastaveniController
  *
@@ -27,65 +26,69 @@ class NastaveniController extends AbstractActionController {
     private $entityManager;
 
     /**
+     * Post manager.
+     * @var Application\Service\AdminManager 
+     */
+    private $adminManager;
+
+    /**
      * Constructor. Its purpose is to inject dependencies into the controller.
      */
-    public function __construct($entityManager) {
+    public function __construct($entityManager, $adminManager) {
         $this->entityManager = $entityManager;
-    }    
-    
+        $this->adminManager = $adminManager;
+    }
+
     public function indexAction() {
 
-
-        // Create form.
-        //$form = new PostForm();
         $form = new NastaveniForm();
-        
-        
+
         // Get admin ID.
         //$postId = (int)$this->params()->fromRoute('id', -1);
         // todo: aktuálně hard settigns
         $adminId = 1;
-        
+
         // Validate input parameter
-        if ($adminId<0) {
+        if ($adminId < 0) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
-        
+
         /* @var $adminRepository \Application\Repository\AdminRepository */
         $adminRepository = $this->entityManager->getRepository(Admin::class);
-        
+
         /* @var $admin \Application\Entity\Admin */
         $admin = $adminRepository->NajdiAdminDleId(1); //->findOneByIdAdmins($adminId);      
-        
-        
-        
-        
+
+
+
+
         if ($admin == null) {
             $this->getResponse()->setStatusCode(404);
-            return;                        
-        } 
-        
-        
-        // Check whether this post is a POST request.
-        // todo: dodělat test
+            return;
+        }
+
+
+// Check whether this post is a POST request.
+// todo: dodělat test
         if ($this->getRequest()->isPost()) {
-            
-            // Get POST data.
+
+// Get POST data.
             $data = $this->params()->fromPost();
-            
-            // Fill form with data.
+
+// Fill form with data.
             $form->setData($data);
             if ($form->isValid()) {
-                                
-                // Get validated form data.
+
+// Get validated form data.
                 $data = $form->getData();
-                
-                // Use post manager service update existing post.                
-                $this->postManager->updatePost($post, $data);
-                
-                // Redirect the user to "admin" page.
-                return $this->redirect()->toRoute('posts', ['action'=>'admin']);
+
+// Use Online manager service update logged user.
+                //$this->postManager->updatePost($post, $data);
+                $this->adminManager->updateAdmin($admin, $data);
+
+// Redirect the user to "admin" page.
+                return $this->redirect()->toRoute('nastaveni', ['action' => 'index']);
             }
         } else {
             $data = [
@@ -97,16 +100,15 @@ class NastaveniController extends AbstractActionController {
                 'telefon' => $admin->getTelefon(),
                 'last_online' => $admin->getLastOnline()
             ];
-            
+
             $form->setData($data);
         }
-        
-        // Render the view template.
+
+// Render the view template.
         return new ViewModel([
             'form' => $form,
             'admin' => $admin
-        ]);         
-        
+        ]);
     }
 
 }

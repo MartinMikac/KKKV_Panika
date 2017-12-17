@@ -1,8 +1,8 @@
 <?php
 namespace Application\Service;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-use Application\Entity\Admin;
+//use Zend\ServiceManager\ServiceManager;
+//use Zend\ServiceManager\ServiceManagerAwareInterface;
+//use Application\Entity\Admin;
 use Zend\Filter\StaticFilter;
 
 /**

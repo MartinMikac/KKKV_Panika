@@ -69,6 +69,7 @@ return [
     'service_manager' => [
         'factories' => [
             Service\AdminManager::class => Service\Factory\AdminManagerFactory::class,
+            Service\OnlineManager::class => Service\Factory\OnlineManagerFactory::class,
         ],
     ],
     'view_manager' => [

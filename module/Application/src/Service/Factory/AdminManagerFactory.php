@@ -3,20 +3,20 @@ namespace Application\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Application\Service\OnlineManager;
+use Application\Service\AdminManager;
 
 /**
- * This is the factory for PostManager. Its purpose is to instantiate the
+ * This is the factory for AdminManager. Its purpose is to instantiate the
  * service.
  */
-class OnlineManagerFactory implements FactoryInterface
+class AdminManagerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         
         // Instantiate the service and inject dependencies
-        return new OnlineManager($entityManager);
+        return new AdminManager($entityManager);
     }
 }
 
