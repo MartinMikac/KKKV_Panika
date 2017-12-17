@@ -10,3 +10,4 @@ database_schema/panika_schema.mwb.beforefix
 composer.lock
 config/autoload/local.php
 composer.lock
+composer.lock

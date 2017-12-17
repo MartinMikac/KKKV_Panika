@@ -30,7 +30,7 @@ return [
             'login' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route' => '/login',
+                    'route' => '/login_bad',
                     'defaults' => [
                         'controller' => Controller\LoginController::class,
                         'action' => 'prihlaseni',
@@ -57,6 +57,16 @@ return [
                     ],
                 ],
             ],
+            'about' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/about',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'about',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -70,6 +80,22 @@ return [
         'factories' => [
             Service\AdminManager::class => Service\Factory\AdminManagerFactory::class,
             Service\OnlineManager::class => Service\Factory\OnlineManagerFactory::class,
+            Service\NavManager::class => Service\Factory\NavManagerFactory::class,
+            Service\RbacAssertionManager::class => Service\Factory\RbacAssertionManagerFactory::class,
+        ],
+    ],
+    // This key stores configuration for RBAC manager.
+    'rbac_manager' => [
+        'assertions' => [Service\RbacAssertionManager::class],
+    ],
+    'view_helpers' => [
+        'factories' => [
+            View\Helper\Menu::class => View\Helper\Factory\MenuFactory::class,
+            View\Helper\Breadcrumbs::class => InvokableFactory::class,
+        ],
+        'aliases' => [
+            'mainMenu' => View\Helper\Menu::class,
+            'pageBreadcrumbs' => View\Helper\Breadcrumbs::class,
         ],
     ],
     'view_manager' => [
