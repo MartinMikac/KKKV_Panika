@@ -4,7 +4,6 @@ namespace User\Form;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\ArrayInput;
 use User\Validator\UserExistsValidator;
 
 /**
@@ -106,18 +105,6 @@ class UserForm extends Form
                     1 => 'Active',
                     2 => 'Retired',                    
                 ]
-            ],
-        ]);
-        
-        // Add "roles" field
-        $this->add([            
-            'type'  => 'select',
-            'name' => 'roles',
-            'attributes' => [
-                'multiple' => 'multiple',
-            ],
-            'options' => [
-                'label' => 'Role(s)',
             ],
         ]);
         
@@ -236,19 +223,6 @@ class UserForm extends Form
                 'validators' => [
                     ['name'=>'InArray', 'options'=>['haystack'=>[1, 2]]]
                 ],
-            ]); 
-        
-        // Add input for "roles" field
-        $inputFilter->add([
-                'class'    => ArrayInput::class,
-                'name'     => 'roles',
-                'required' => true,
-                'filters'  => [                    
-                    ['name' => 'ToInt'],
-                ],                
-                'validators' => [
-                    ['name'=>'GreaterThan', 'options'=>['min'=>0]]
-                ],
-            ]); 
+            ]);        
     }           
 }

@@ -4,7 +4,6 @@ namespace User\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use User\Entity\User;
-use User\Entity\Role;
 use User\Form\UserForm;
 use User\Form\PasswordChangeForm;
 use User\Form\PasswordResetForm;
@@ -42,12 +41,6 @@ class UserController extends AbstractActionController
      */
     public function indexAction() 
     {
-        // Access control.
-        if (!$this->access('user.manage')) {
-            $this->getResponse()->setStatusCode(401);
-            return;
-        }
-        
         $users = $this->entityManager->getRepository(User::class)
                 ->findBy([], ['id'=>'ASC']);
         
@@ -63,16 +56,6 @@ class UserController extends AbstractActionController
     {
         // Create user form
         $form = new UserForm('create', $this->entityManager);
-        
-        // Get the list of all available roles (sorted by name).
-        $allRoles = $this->entityManager->getRepository(Role::class)
-                ->findBy([], ['name'=>'ASC']);
-        $roleList = [];
-        foreach ($allRoles as $role) {
-            $roleList[$role->getId()] = $role->getName();
-        }
-        
-        $form->get('roles')->setValueOptions($roleList);
         
         // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
@@ -149,16 +132,6 @@ class UserController extends AbstractActionController
         // Create user form
         $form = new UserForm('update', $this->entityManager, $user);
         
-        // Get the list of all available roles (sorted by name).
-        $allRoles = $this->entityManager->getRepository(Role::class)
-                ->findBy([], ['name'=>'ASC']);
-        $roleList = [];
-        foreach ($allRoles as $role) {
-            $roleList[$role->getId()] = $role->getName();
-        }
-        
-        $form->get('roles')->setValueOptions($roleList);
-        
         // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
             
@@ -181,17 +154,10 @@ class UserController extends AbstractActionController
                         ['action'=>'view', 'id'=>$user->getId()]);                
             }               
         } else {
-            
-            $userRoleIds = [];
-            foreach ($user->getRoles() as $role) {
-                $userRoleIds[] = $role->getId();
-            }
-            
             $form->setData(array(
                     'full_name'=>$user->getFullName(),
                     'email'=>$user->getEmail(),
-                    'status'=>$user->getStatus(), 
-                    'roles' => $userRoleIds
+                    'status'=>$user->getStatus(),                    
                 ));
         }
         

@@ -73,9 +73,54 @@ class IndexController extends AbstractActionController {
 
         return new ViewModel([
             'onlines' => $onlines,
-            'kus' => $kus,
+            //'kus' => $kus,
         ]);
         // Find the post by ID
     }
 
+    
+    public function aboutAction() {
+
+        // pokud není autorizován pak přesměrovat na přihlášení
+        /*        if ($this->isAuthorised == false) {
+
+          return $this->redirect()->toRoute('login', ['action' => 'index']);
+          } else {
+
+          $vm = new ViewModel();
+          return $vm;
+          }
+         */
+
+        //$entityManager = $container->get('doctrine.entitymanager.orm_default');   
+        //$online = $entityManager->getRepository(Online::class)->findAll();
+        //$onlines = $this->entityManager->getRepository(Online::class)->findAll();
+
+        //$onlines = $this->entityManager->getRepository(Online::class)->findAllByStatus("normalni");
+        
+        
+        $onlines = $this->entityManager->getRepository(Online::class)->NajdiOnline(1)->getResult();
+        
+        
+        //$vystup = $onlines->getSQL();
+        
+        //var_dump($onlines);
+        
+        
+
+
+        //$kus = $this->entityManager->getRepository(Online::class)->findByIdOnline(1);
+        //    $user = $this->entityManager->getRepository(User::class)
+        //             ->findOneByEmail($this->identity());
+        //echo $online;
+        //var_dump($this->entityManager->getRepository(Online::class))->findAlll();
+        //echo "</br></br></br>TEST";
+
+        return new ViewModel([
+            'onlines' => $onlines,
+            //'kus' => $kus,
+        ]);
+        // Find the post by ID
+    }
+    
 }
