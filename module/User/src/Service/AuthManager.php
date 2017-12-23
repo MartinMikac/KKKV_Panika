@@ -10,11 +10,6 @@ use Zend\Authentication\Result;
  */
 class AuthManager
 {
-    // Constants returned by the access filter.
-    const ACCESS_GRANTED = 1; // Access to the page is granted.
-    const AUTH_REQUIRED  = 2; // Authentication is required to see the page.
-    const ACCESS_DENIED  = 3; // Access to the page is denied.
-    
     /**
      * Authentication service.
      * @var \Zend\Authentication\AuthenticationService
@@ -34,20 +29,13 @@ class AuthManager
     private $config;
     
     /**
-     * RBAC manager.
-     * @var User\Service\RbacManager
-     */
-    private $rbacManager;
-    
-    /**
      * Constructs the service.
      */
-    public function __construct($authService, $sessionManager, $config, $rbacManager) 
+    public function __construct($authService, $sessionManager, $config) 
     {
         $this->authService = $authService;
         $this->sessionManager = $sessionManager;
         $this->config = $config;
-        $this->rbacManager = $rbacManager;
     }
     
     /**
@@ -121,49 +109,22 @@ class AuthManager
                 if (is_array($actionList) && in_array($actionName, $actionList) ||
                     $actionList=='*') {
                     if ($allow=='*')
-                        // Anyone is allowed to see the page.
-                        return self::ACCESS_GRANTED; 
-                    else if (!$this->authService->hasIdentity()) {
-                        // Only authenticated user is allowed to see the page.
-                        return self::AUTH_REQUIRED;                        
-                    }
-                        
-                    if ($allow=='@') {
-                        // Any authenticated user is allowed to see the page.
-                        return self::ACCESS_GRANTED;                         
-                    } else if (substr($allow, 0, 1)=='@') {
-                        // Only the user with specific identity is allowed to see the page.
-                        $identity = substr($allow, 1);
-                        if ($this->authService->getIdentity()==$identity)
-                            return self::ACCESS_GRANTED; 
-                        else
-                            return self::ACCESS_DENIED;
-                    } else if (substr($allow, 0, 1)=='+') {
-                        // Only the user with this permission is allowed to see the page.
-                        $permission = substr($allow, 1);
-                        if ($this->rbacManager->isGranted(null, $permission))
-                            return self::ACCESS_GRANTED; 
-                        else
-                            return self::ACCESS_DENIED;
-                    } else {
-                        throw new \Exception('Unexpected value for "allow" - expected ' .
-                                'either "?", "@", "@identity" or "+permission"');
+                        return true; // Anyone is allowed to see the page.
+                    else if ($allow=='@' && $this->authService->hasIdentity()) {
+                        return true; // Only authenticated user is allowed to see the page.
+                    } else {                    
+                        return false; // Access denied.
                     }
                 }
             }            
         }
         
-        // In restrictive mode, we require authentication for any action not 
-        // listed under 'access_filter' key and deny access to authorized users 
-        // (for security reasons).
-        if ($mode=='restrictive') {
-            if(!$this->authService->hasIdentity())
-                return self::AUTH_REQUIRED;
-            else
-                return self::ACCESS_DENIED;
-        }
+        // In restrictive mode, we forbid access for unauthorized users to any 
+        // action not listed under 'access_filter' key (for security reasons).
+        if ($mode=='restrictive' && !$this->authService->hasIdentity())
+            return false;
         
         // Permit access to this page.
-        return self::ACCESS_GRANTED;
+        return true;
     }
 }

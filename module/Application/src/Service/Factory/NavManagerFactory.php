@@ -3,7 +3,6 @@ namespace Application\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Application\Service\NavManager;
-use User\Service\RbacManager;
 
 /**
  * This is the factory class for NavManager service. The purpose of the factory
@@ -20,8 +19,7 @@ class NavManagerFactory
         
         $viewHelperManager = $container->get('ViewHelperManager');
         $urlHelper = $viewHelperManager->get('url');
-        $rbacManager = $container->get(RbacManager::class);
         
-        return new NavManager($authService, $urlHelper, $rbacManager);
+        return new NavManager($authService, $urlHelper);
     }
 }

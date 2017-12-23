@@ -19,7 +19,7 @@ return [
             'orm_default' => [
                 'driverClass' => PDOMySqlDriver::class,
                 'params' => [
-                    'host' => '192.168.2.75',
+                    'host' => '192.168.1.104',
                     'user' => 'root',
                     'password' => 'toor',
                     'dbname' => 'panika',
