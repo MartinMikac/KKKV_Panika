@@ -22,7 +22,7 @@
         "zendframework/zend-authentication": "^2.5",
         "doctrine/migrations": "^1.4",
         "zendframework/zend-math": "^3.0",
-        "zendframework/zend-crypt": "^3.2",
+        "zendframework/zend-crypt": "^3.1",
         "zendframework/zend-captcha": "^2.6",
         "doctrine/doctrine-orm-module": "^1.1",
         "zendframework/zend-cache": "^2.7",
@@ -38,7 +38,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "ApplicationTest\\": "module/Application/test/"            
+            "ApplicationTest\\": "module/Application/test/",
+            "User\\": "module/User/test/"
         }
     },
     "extra": [],

@@ -5,101 +5,90 @@
         <meta charset="utf-8">
         <?= $this->headTitle('Systém paniky v KKKV')->setSeparator(' - ')->setAutoEscape(false) ?>
 
-        <?=
-                $this->headMeta()
-                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
 
         <!-- Le styles -->
-        <?=
-                $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
-                ->prependStylesheet($this->basePath('css/style.css'))
-                //->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
-                ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
-                ->prependStylesheet($this->basePath('css/signin.css'))
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+            ->prependStylesheet($this->basePath('css/style.css'))
+            //->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+            ->prependStylesheet($this->basePath('css/signin.css'))
         ?>
 
         <!-- Scripts -->
-        <?=
-                $this->headScript()
-                //->prependFile($this->basePath('js/bootstrap.min.js'))
-                ->prependFile($this->basePath('js/bootstrap.bundle.min.js'))
-                ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+        <?= $this->headScript()
+            //->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/bootstrap.bundle.min.js'))
+            ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
         ?>
     </head>
-
+    
     <body>    
 
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded mb-3 col-md-8 offset-md-2">
-<?php //<a class="navbar-brand" href="#">Logo</a>  ?>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="<?= $this->url("home") ?>">Domů <span class="sr-only">(aktuální)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= $this->url("nastaveni") ?>">Nastavení</a>
-                    </li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Správa uživatelů</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="<?= $this->url("users") ?>/add">Přidat uživatele</a>
-                            <a class="dropdown-item" href="<?= $this->url("reset-password") ?>">Resetovat heslo</a>
-                        </div>
-                    </li>
-
-
-
-                    <li class="nav-item ml-5">
-                        <a href="<?= $this->url("logout") ?>" class="btn btn-info btn-md">
-                            <span class="glyphicon glyphicon-log-out"></span> Odhlásit
-                        </a>
-                    </li>
-
-                    <?php
-                    // zakomentováno pro pozdější použití
-
-                    /*
-                      <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                      </div>
-                      </li>
-                      <li class="nav-item">
-                      <a class="nav-link disabled" href="#">Disabled</a>
-                      </li>
-                      </ul>
-                      <form class="form-inline my-2 my-lg-0">
-                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                      </form>
-                     */
-                    ?>  
-
-            </div>
+          <?php //<a class="navbar-brand" href="#">Logo</a> ?>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="<?= $this->url("home") ?>">Domů <span class="sr-only">(aktuální)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?= $this->url("nastaveni") ?>">Nastavení</a>
+              </li>
+              
+              <li class="nav-item ml-5">
+                <a href="#" class="btn btn-info btn-md">
+                  <span class="glyphicon glyphicon-log-out"></span> Odhlásit
+                </a>
+              </li>
+              
+        <?php 
+                 
+        
+        // zakomentováno pro pozdější použití
+        
+        /*      
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        */
+        ?>  
+            
+          </div>
         </nav>
-
+        
         <div class="container">
-<?= $this->content ?>
+            <?= $this->content ?>
             <hr>
             <footer>
                 <p>&copy; 2017 - <?= date('Y') ?><a target="_blank" href="https://www.martinmikac.cz/"> by Miki </a> </p>
             </footer>
         </div>
-<?= $this->inlineScript() ?>        
+        <?= $this->inlineScript() ?>        
 
-    </body>
+  </body>
 </html>
