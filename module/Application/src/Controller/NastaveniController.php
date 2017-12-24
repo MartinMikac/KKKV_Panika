@@ -44,24 +44,19 @@ class NastaveniController extends AbstractActionController {
         $form = new NastaveniForm();
 
         // Get admin ID.
-        //$postId = (int)$this->params()->fromRoute('id', -1);
-        // todo: aktuálně hard settigns
-        $adminId = 1;
+        $adminId = $this->params()->fromRoute('id');
 
-        // Validate input parameter
-        if ($adminId < 0) {
-            $this->getResponse()->setStatusCode(404);
-            return;
+
+        if ($adminId != null) {
+
+            /* @var $adminRepository \Application\Repository\AdminRepository */
+            $adminRepository = $this->entityManager->getRepository(Admin::class);
+
+            /* @var $admin \Application\Entity\Admin */
+            $admin = $adminRepository->NajdiAdminDleId($adminId); //->findOneByIdAdmins($adminId);      
+        } else {
+            $admin = $this->currentUser();
         }
-
-        /* @var $adminRepository \Application\Repository\AdminRepository */
-        $adminRepository = $this->entityManager->getRepository(Admin::class);
-
-        /* @var $admin \Application\Entity\Admin */
-        $admin = $adminRepository->NajdiAdminDleId(1); //->findOneByIdAdmins($adminId);      
-
-
-
 
         if ($admin == null) {
             $this->getResponse()->setStatusCode(404);
@@ -69,25 +64,25 @@ class NastaveniController extends AbstractActionController {
         }
 
 
-// Check whether this post is a POST request.
-// todo: dodělat test
+        // Check whether this post is a POST request.
+        // todo: dodělat test
         if ($this->getRequest()->isPost()) {
 
-// Get POST data.
+            // Get POST data.
             $data = $this->params()->fromPost();
 
-// Fill form with data.
+            // Fill form with data.
             $form->setData($data);
             if ($form->isValid()) {
 
-// Get validated form data.
+                // Get validated form data.
                 $data = $form->getData();
 
-// Use Online manager service update logged user.
+                // Use Online manager service update logged user.
                 //$this->postManager->updatePost($post, $data);
                 $this->adminManager->updateAdmin($admin, $data);
 
-// Redirect the user to "admin" page.
+                // Redirect the user to "admin" page.
                 return $this->redirect()->toRoute('nastaveni', ['action' => 'index']);
             }
         } else {

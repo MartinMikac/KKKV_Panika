@@ -45,13 +45,13 @@ class NavManager
         
         $items[] = [
             'id' => 'home',
-            'label' => 'Home',
+            'label' => 'Domů',
             'link'  => $url('home')
         ];
         
         $items[] = [
             'id' => 'about',
-            'label' => 'About',
+            'label' => 'about',
             'link'  => $url('about')
         ];
         
@@ -60,7 +60,7 @@ class NavManager
         if (!$this->authService->hasIdentity()) {
             $items[] = [
                 'id' => 'login',
-                'label' => 'Sign in',
+                'label' => 'Přihlásit',
                 'link'  => $url('login'),
                 'float' => 'right'
             ];
@@ -96,7 +96,7 @@ class NavManager
             if (count($adminDropdownItems)!=0) {
                 $items[] = [
                     'id' => 'admin',
-                    'label' => 'Admin',
+                    'label' => 'Administrace',
                     'dropdown' => $adminDropdownItems
                 ];
             }
@@ -108,12 +108,17 @@ class NavManager
                 'dropdown' => [
                     [
                         'id' => 'settings',
-                        'label' => 'Settings',
+                        'label' => 'Nastavení',
                         'link' => $url('application', ['action'=>'settings'])
                     ],
                     [
+                        'id' => 'nastaveni',
+                        'label' => 'Nastavení - NEW!!',
+                        'link' => $url('nastaveni')
+                    ],                    
+                    [
                         'id' => 'logout',
-                        'label' => 'Sign out',
+                        'label' => 'Odhlásit',
                         'link' => $url('logout')
                     ],
                 ]
