@@ -8,26 +8,26 @@
 namespace Application\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Application\Entity\Nastaveni;
+use Application\Entity\Setting;
 
 /**
  * This is the custom repository class for Post entity.
  */
-class NastaveniRepository extends EntityRepository {
+class SettingRepository extends EntityRepository {
 
     /**
      * Retrieves all published posts in descending date order.
      * @return Query
      */
-    public function NajdiNastaveniDleIdAdmin($id) {
+    public function NajdiNastaveniDleIdUser($id) {
         $entityManager = $this->getEntityManager();
 
         $queryBuilder = $entityManager->createQueryBuilder();
 
         $queryBuilder->select('p')
-                ->from(Admin::class, 'p')
-                ->where('p.id_admins = :id_admin')
-                ->setParameter(':id_admin',$id);
+                ->from(Setting::class, 'p')
+                ->where('p.user_id = :id_user')
+                ->setParameter(':id_user',$id);
         
        
        

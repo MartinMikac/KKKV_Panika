@@ -10,7 +10,7 @@ namespace Application\Service;
 /**
  * The AdminManager service is responsible for save settigns, updating existing
  */
-class AdminManager {
+class SettignManager {
 
     /**
      * Entity manager.
@@ -50,19 +50,19 @@ class AdminManager {
     /**
      * This method allows to update data of a single post.
      */
-    public function updateAdmin(\Application\Entity\Admin $admin, $data) {
+    public function updateAdmin(\Application\Entity\Settign $settign, $data) {
 
-        $admin->setCeleJmeno($data['cele_jmeno']);
-        $admin->setUmisteni($data['umisteni']);
-        $admin->setEmail($data['email']);
-        $admin->setTelefon($data['telefon']);
+        $settign->setCeleJmeno($data['cele_jmeno']);
+        $settign->setUmisteni($data['umisteni']);
+        $settign->setEmail($data['email']);
+        $settign->setTelefon($data['telefon']);
         
         //$admin->setLastOnline(date('Y-m-d H:i:s'));
         
         
 
         if (strlen($data['heslo']) > 1) {
-            $admin->setHeslo(password_hash($data['heslo'], PASSWORD_DEFAULT));
+            $settign->setHeslo(password_hash($data['heslo'], PASSWORD_DEFAULT));
         }
 
         $this->entityManager->flush();

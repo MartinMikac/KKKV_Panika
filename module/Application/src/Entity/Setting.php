@@ -66,7 +66,7 @@ class Setting
     protected $user_id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="setting")
+     * @ORM\OneToOne(targetEntity="\User\Entity\User", inversedBy="setting")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $user;
@@ -285,7 +285,7 @@ class Setting
     /**
      * Set User entity (one to one).
      *
-     * @param \Application\Entity\User $user
+     * @param \User\Entity\User $user
      * @return \Application\Entity\Setting
      */
     public function setUser(User $user)
@@ -298,7 +298,7 @@ class Setting
     /**
      * Get User entity (one to one).
      *
-     * @return \Application\Entity\User
+     * @return \User\Entity\User
      */
     public function getUser()
     {

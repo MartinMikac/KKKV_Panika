@@ -42,7 +42,7 @@ return [
                 'options' => [
                     'route' => '/nastaveni',
                     'defaults' => [
-                        'controller' => Controller\NastaveniController::class,
+                        'controller' => Controller\SettignController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -73,12 +73,12 @@ return [
         'factories' => [
             Controller\LoginController::class => InvokableFactory::class,
             Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
-            Controller\NastaveniController::class => Controller\Factory\NastaveniControllerFactory::class,
+            Controller\SettignController::class => Controller\Factory\SettignControllerFactory::class,
         ],
     ],
     'service_manager' => [
         'factories' => [
-            Service\AdminManager::class => Service\Factory\AdminManagerFactory::class,
+            Service\SettignManager::class => Service\Factory\SettignManagerFactory::class,
             Service\OnlineManager::class => Service\Factory\OnlineManagerFactory::class,
             Service\NavManager::class => Service\Factory\NavManagerFactory::class,
             Service\RbacAssertionManager::class => Service\Factory\RbacAssertionManagerFactory::class,
@@ -103,7 +103,7 @@ return [
                 // Allow authorized users to visit "settings" action
                 ['actions' => ['settings','nastaveni'], 'allow' => '@']
             ],
-            Controller\NastaveniController::class => [
+            Controller\SettignController::class => [
                 // Allow anyone to visit "index" and "about" actions
                 ['actions' => ['index'], 'allow' => '@'],
 
