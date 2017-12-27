@@ -55,8 +55,18 @@ class NastaveniController extends AbstractActionController {
             /* @var $admin \Application\Entity\Admin */
             $admin = $adminRepository->NajdiAdminDleId($adminId); //->findOneByIdAdmins($adminId);      
         } else {
-            $admin = $this->currentUser();
+            
+            /* @var $user \User\Entity\User */
+            $user = $this->currentUser();
+            
+            /* @var $adminRepository \Application\Repository\AdminRepository */
+            $adminRepository = $this->entityManager->getRepository(Admin::class);
+
+            /* @var $admin \Application\Entity\Admin */
+            $admin = $adminRepository->NajdiAdminDleId($user->getId()); //->findOneByIdAdmins($adminId);      
         }
+        
+        
 
         if ($admin == null) {
             $this->getResponse()->setStatusCode(404);

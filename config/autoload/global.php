@@ -9,13 +9,12 @@
  * @NOTE: In practice, this file will typically be INCLUDED in your source
  * control, so do not include passwords or other sensitive information in this
  * file.
- *  */
+ */
 
 use Zend\Session\Storage\SessionArrayStorage;
 use Zend\Session\Validator\RemoteAddr;
 use Zend\Session\Validator\HttpUserAgent;
 use Zend\Cache\Storage\Adapter\Filesystem;
-
 
 return [
     // Session configuration.
@@ -53,6 +52,17 @@ return [
                     'options' => [                        
                     ],
                 ],
+            ],
+        ],
+    ],
+    'doctrine' => [        
+        // migrations configuration
+        'migrations_configuration' => [
+            'orm_default' => [
+                'directory' => 'data/Migrations',
+                'name'      => 'Doctrine Database Migrations',
+                'namespace' => 'Migrations',
+                'table'     => 'migrations',
             ],
         ],
     ],
