@@ -8,9 +8,9 @@ namespace Application\Service;
 //use Zend\Filter\StaticFilter;
 
 /**
- * The AdminManager service is responsible for save settigns, updating existing
+ * The AdminManager service is responsible for save settings, updating existing
  */
-class SettignManager {
+class SettingManager {
 
     /**
      * Entity manager.
@@ -50,19 +50,19 @@ class SettignManager {
     /**
      * This method allows to update data of a single post.
      */
-    public function updateAdmin(\Application\Entity\Settign $settign, $data) {
+    public function updateAdmin(\Application\Entity\Setting $setting, $data) {
 
-        $settign->setCeleJmeno($data['cele_jmeno']);
-        $settign->setUmisteni($data['umisteni']);
-        $settign->setEmail($data['email']);
-        $settign->setTelefon($data['telefon']);
+        $setting->setCeleJmeno($data['cele_jmeno']);
+        $setting->setUmisteni($data['umisteni']);
+        $setting->setEmail($data['email']);
+        $setting->setTelefon($data['telefon']);
         
         //$admin->setLastOnline(date('Y-m-d H:i:s'));
         
         
 
         if (strlen($data['heslo']) > 1) {
-            $settign->setHeslo(password_hash($data['heslo'], PASSWORD_DEFAULT));
+            $settng->setHeslo(password_hash($data['heslo'], PASSWORD_DEFAULT));
         }
 
         $this->entityManager->flush();

@@ -17,7 +17,7 @@ use Application\Entity\Setting;
  *
  * @author miki
  */
-class SettignController extends AbstractActionController {
+class SettingController extends AbstractActionController {
 
     /**
      * Entity manager.
@@ -49,8 +49,8 @@ class SettignController extends AbstractActionController {
 
         if ($adminId != null) {
 
-            /* @var $settingRepository \Application\Repository\SettignRepository */
-            $settingRepository = $this->entityManager->getRepository(Settign::class);
+            /* @var $settingRepository \Application\Repository\SettingRepository */
+            $settingRepository = $this->entityManager->getRepository(Setting::class);
 
             /* @var $admin \Application\Entity\Setting */
             $setting = $settingRepository->NajdiNastaveniDleIdUser($adminId); //->findOneByIdAdmins($adminId);      
@@ -59,7 +59,7 @@ class SettignController extends AbstractActionController {
             /* @var $user \User\Entity\User */
             $user = $this->currentUser();
             
-            /* @var $settignRepository \Application\Repository\SettignRepository */
+            /* @var $settingRepository \Application\Repository\SettingRepository */
             $settingRepository = $this->entityManager->getRepository(Setting::class);
 
             /* @var $admin \Application\Entity\Setting */

@@ -3,23 +3,23 @@ namespace Application\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Application\Controller\SettignController;
-use Application\Service\SettignManager;
+use Application\Controller\SettingController;
+use Application\Service\SettingManager;
 
 /**
  * This is the factory for NastaveniController. Its purpose is to instantiate the
  * controller and inject dependencies into it.
  */
-class SettignControllerFactory implements FactoryInterface
+class SettingControllerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
 
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $settingManager = $container->get(SettignManager::class);
+        $settingManager = $container->get(SettingManager::class);
         
         // Instantiate the controller and inject dependencies
-        return new SettignController($entityManager, $settingManager);        
+        return new SettingController($entityManager, $settingManager);        
         
     }
 }

@@ -26,13 +26,9 @@ class SettingRepository extends EntityRepository {
 
         $queryBuilder->select('p')
                 ->from(Setting::class, 'p')
-                ->where('p.user_id = :id_user')
+                ->where('p.id = :id_user')
                 ->setParameter(':id_user',$id);
         
-       
-       
-       
-
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
