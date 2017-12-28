@@ -8,12 +8,12 @@
 namespace Application\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Application\Entity\Setting;
+use Application\Entity\User;
 
 /**
  * This is the custom repository class for Post entity.
  */
-class SettingRepository extends EntityRepository {
+class UserRepository extends EntityRepository {
 
     /**
      * Retrieves all published posts in descending date order.
@@ -27,7 +27,7 @@ class SettingRepository extends EntityRepository {
 
         $queryBuilder->select('p')
                 ->from(Setting::class, 'p')
-                ->where('p.user_id = :id_user')
+                ->where('p.id = :id_user')
                 ->setParameter(':id_user',$id);
         
         

@@ -11,6 +11,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Form\NastaveniForm;
 use Application\Entity\Setting;
+use Application\Entity\User;
 
 /**
  * Description of NastaveniController
@@ -26,17 +27,20 @@ class SettingController extends AbstractActionController {
     private $entityManager;
 
     /**
-     * Post manager.
-     * @var Application\Service\AdminManager 
+     * Setting manager.
+     * @var $settingManager \Application\Service\SettingManager
      */
-    private $adminManager;
+    private $settingManager;
 
     /**
      * Constructor. Its purpose is to inject dependencies into the controller.
      */
-    public function __construct($entityManager, $adminManager) {
+    public function __construct($entityManager, $settingManager) {
         $this->entityManager = $entityManager;
-        $this->adminManager = $adminManager;
+        $this->settingManager = $settingManager;
+        
+        //$settingManager->
+        
     }
 
     public function indexAction() {
@@ -45,31 +49,58 @@ class SettingController extends AbstractActionController {
 
         // Get admin ID.
         $adminId = $this->params()->fromRoute('id');
+        $user = null;
 
 
         if ($adminId != null) {
 
+
+            /* @var $user \User\Entity\User */
+            $user = $this->entityManager->getRepository(User::class)->findOneById($adminId);
+
+            if ($user == null) {
+                $this->getResponse()->setStatusCode(404);
+                return;
+            }
+
             /* @var $settingRepository \Application\Repository\SettingRepository */
             $settingRepository = $this->entityManager->getRepository(Setting::class);
 
             /* @var $setting \Application\Entity\Setting */
-            $setting = $settingRepository->NajdiNastaveniDleIdUser($adminId); //->findOneByIdAdmins($adminId);      
+            $setting = $settingRepository->NajdiNastaveniDleIdUser($adminId);
         } else {
-            
+
             /* @var $user \User\Entity\User */
             $user = $this->currentUser();
             $id_user = $user->getId();
-            
+
+            /* @var $user \Application\Entity\User */
+            $user = $this->entityManager->getRepository(User::class)->findOneById($id_user);
+
+            if ($user == null) {
+                $this->getResponse()->setStatusCode(404);
+                return;
+            }
+
             /* @var $settingRepository \Application\Repository\SettingRepository */
             $settingRepository = $this->entityManager->getRepository(Setting::class);
 
             /* @var $setting \Application\Entity\Setting */
-            $setting = $settingRepository->NajdiNastaveniDleIdUser($id_user); //->findOneByIdAdmins($adminId);                  
-            //$setting = $settingRepository->getSett
+            $setting = $settingRepository->NajdiNastaveniDleIdUser($id_user);
+
+            if ($setting == null) {
+                /* @var $settingManager \Application\Service\SettingManager */
+                $settingManager = $this->settingManager;
+                $settingManager->createDefaultSetting($user);
+            }
+
+
+            /* @var $setting \Application\Entity\Setting */
+            $setting = $settingRepository->NajdiNastaveniDleIdUser($id_user);
             
         }
-        
-        
+
+
 
         if ($setting == null) {
             $this->getResponse()->setStatusCode(404);
@@ -90,10 +121,11 @@ class SettingController extends AbstractActionController {
 
                 // Get validated form data.
                 $data = $form->getData();
-
+                $data['id'] = $setting->getId();
                 // Use Online manager service update logged user.
                 //$this->postManager->updatePost($post, $data);
-                $this->adminManager->updateAdmin($setting, $data);
+                //$this->adminManager->updateAdmin($setting, $data);
+                $this->settingManager->updateAdmin($setting, $data);
 
                 // Redirect the user to "admin" page.
                 return $this->redirect()->toRoute('nastaveni', ['action' => 'index']);

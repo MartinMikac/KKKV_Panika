@@ -123,6 +123,7 @@ class NastaveniForm extends Form {
             'options' => [
                 'label' => 'Heslo',
             ],
+            'placeholder' => 'Vložte nové heslo'
         ]);
 
 
