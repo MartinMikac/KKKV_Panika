@@ -25,8 +25,10 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
             include __DIR__ . '/../../../../config/application.config.php',
             $configOverrides
         ));
-
+        
         parent::setUp();
+        
+        $traceError = true;        
     }
 
     public function testIndexActionCanBeAccessed()

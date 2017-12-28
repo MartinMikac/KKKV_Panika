@@ -21,6 +21,7 @@ class SettingRepository extends EntityRepository {
      */
     public function NajdiNastaveniDleIdUser($id) {
         $entityManager = $this->getEntityManager();
+        
 
         $queryBuilder = $entityManager->createQueryBuilder();
 
@@ -28,6 +29,7 @@ class SettingRepository extends EntityRepository {
                 ->from(Setting::class, 'p')
                 ->where('p.id = :id_user')
                 ->setParameter(':id_user',$id);
+        
         
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }

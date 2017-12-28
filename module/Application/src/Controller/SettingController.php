@@ -52,18 +52,20 @@ class SettingController extends AbstractActionController {
             /* @var $settingRepository \Application\Repository\SettingRepository */
             $settingRepository = $this->entityManager->getRepository(Setting::class);
 
-            /* @var $admin \Application\Entity\Setting */
+            /* @var $setting \Application\Entity\Setting */
             $setting = $settingRepository->NajdiNastaveniDleIdUser($adminId); //->findOneByIdAdmins($adminId);      
         } else {
             
             /* @var $user \User\Entity\User */
             $user = $this->currentUser();
+            $id_user = $user->getId();
             
             /* @var $settingRepository \Application\Repository\SettingRepository */
             $settingRepository = $this->entityManager->getRepository(Setting::class);
 
-            /* @var $admin \Application\Entity\Setting */
-            $setting = $settingRepository->NajdiNastaveniDleIdUser($user->getId()); //->findOneByIdAdmins($adminId);                  
+            /* @var $setting \Application\Entity\Setting */
+            $setting = $settingRepository->NajdiNastaveniDleIdUser($id_user); //->findOneByIdAdmins($adminId);                  
+            //$setting = $settingRepository->getSett
             
         }
         
