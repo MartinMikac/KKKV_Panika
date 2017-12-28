@@ -9,3 +9,4 @@ config/autoload/development.local.php.dist
 database_schema/panika_schema.mwb.bak
 database_schema/panika_schema.mwb.beforefix
 config/autoload/local.php
+*.png
