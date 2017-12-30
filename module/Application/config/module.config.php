@@ -101,13 +101,13 @@ return [
                 // Allow anyone to visit "index" and "about" actions
                 ['actions' => ['index', 'about'], 'allow' => '*'],
                 // Allow authorized users to visit "settings" action
-                ['actions' => ['settings','nastaveni'], 'allow' => '@']
+                ['actions' => ['settings'], 'allow' => '@']
             ],
             Controller\SettingController::class => [
                 // Allow anyone to visit "index" and "about" actions
-                ['actions' => ['index'], 'allow' => '@'],
-
-            ],            
+                ['actions' => ['index'], 'allow' => '+profile.own.edit'],
+                ['actions' => '*', 'allow' => '+permission.manage']
+            ],
         ]
     ],
     // This key stores configuration for RBAC manager.

@@ -26,6 +26,7 @@ return [
     'Zend\Form',
     'Zend\Router',
     'Zend\Validator',
+    'Zend\Cache',
     'Application',
     'User'    
 ];
