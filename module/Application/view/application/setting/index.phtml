@@ -27,7 +27,7 @@ $form->get('email')->setAttributes([
             'placeholder' => 'E-mail',
             'required' => true,
             'autofocus' => false,
-            'disabled' => 'disabled'
+            'readonly' => 'readonly'
         ])
         ->setLabelAttributes([
             'class' => 'col-sm-2 col-form-label col-form-label-lg'
@@ -45,8 +45,7 @@ $form->get('telefon')->setAttributes([
 $form->get('jmeno')->setAttributes([
             'class' => 'form-control form-control-lg',
             'placeholder' => 'Jméno',
-            'required' => true,
-            'disabled' => 'disabled'
+            'required' => true
         ])
         ->setLabelAttributes([
             'class' => 'col-sm-2 col-form-label col-form-label-lg'

@@ -16,7 +16,7 @@ use Application\Entity\Setting;
 class SettingRepository extends EntityRepository {
 
     /**
-     * Retrieves all published posts in descending date order.
+     * Retrieves setting for user
      * @return Query
      */
     public function NajdiNastaveniDleIdUser($id) {
@@ -33,5 +33,7 @@ class SettingRepository extends EntityRepository {
         
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
+
+
 
 }

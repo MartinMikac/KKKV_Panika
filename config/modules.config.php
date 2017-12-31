@@ -27,6 +27,7 @@ return [
     'Zend\Router',
     'Zend\Validator',
     'Zend\Cache',
+    'Zend\Paginator',
     'Application',
     'User'    
 ];

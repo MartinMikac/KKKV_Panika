@@ -5,65 +5,66 @@
 </div>
 
 <h4>
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 </h4>
 
 
-<?php foreach($onlines as $online): ?>
 
-<h3>
-  <a href="#">
-      <?php /*$this->escapeHtml($online->getStatus()); */ ?>
-      <?php //$this->escapeHtml($online->getIdOnline()); ?>
-  </a>    
-</h3>
 
-<?php endforeach; ?>
+<?php foreach ($onlines as $online): ?>
 
-<?php foreach($onlines as $online): ?>
-
-<h3>
-  <a href="#">
-      <?php //echo $this->escapeHtml($online->getJmeno());  ?>
-      <?php //echo $this->escapeHtml($online->getIdOnline()); ?>
-  </a>    
-</h3>
+    <h3>
+        <a href="#">
+            <?php //echo $this->escapeHtml($online->getJmeno());  ?>
+            <?php //echo $this->escapeHtml($online->getIdOnline()); ?>
+        </a>    
+    </h3>
 
 <?php endforeach; ?>
 
 
 <table class="table">
-  <thead class="thead-inverse">
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
+    <thead class="thead-inverse">
+        <tr>
+            <th>#</th>
+            <th>Jméno</th>
+            <th>Oddělení</th>
+            <th>Telefon</th>
+            <th>Čas kontroly</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <?php $pocitadlo = 1; ?>
+
+        
+        <?php foreach ($onlines as $online): ?>
+
+
+            <tr>
+                <th scope="row"><?= $pocitadlo ?>   </th>
+
+                <td>
+                    <?= $this->escapeHtml($online->getCeleJmeno()); ?>        
+                </td>
+                <td>
+                    <?= $this->escapeHtml($online->getUmisteni()); ?>        
+                </td>
+                <td>
+                    <?= $this->escapeHtml($online->getTelefon()); ?>        
+                </td>
+                <td>
+                    <?= $this->escapeHtml($online->getLastOnline()->format("d.m.Y H:i:s")) ?>
+                </td>
+            </tr>
+            <?php $pocitadlo++; ?>   
+        <?php endforeach; ?>        
+
+    </tbody>
 </table>

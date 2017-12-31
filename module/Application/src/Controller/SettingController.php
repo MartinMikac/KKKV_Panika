@@ -38,9 +38,8 @@ class SettingController extends AbstractActionController {
     public function __construct($entityManager, $settingManager) {
         $this->entityManager = $entityManager;
         $this->settingManager = $settingManager;
-        
+
         //$settingManager->
-        
     }
 
     public function indexAction() {
@@ -97,7 +96,6 @@ class SettingController extends AbstractActionController {
 
             /* @var $setting \Application\Entity\Setting */
             $setting = $settingRepository->NajdiNastaveniDleIdUser($id_user);
-            
         }
 
 
@@ -129,6 +127,11 @@ class SettingController extends AbstractActionController {
 
                 // Redirect the user to "admin" page.
                 return $this->redirect()->toRoute('nastaveni', ['action' => 'index']);
+            } else {
+                echo "NEVALIDNI";
+                print_r($form->getMessages()); //error messages
+                print_r($form->getErrors()); //error codes
+                print_r($form->getErrorMessages()); //any custom error messages
             }
         } else {
             $data = [

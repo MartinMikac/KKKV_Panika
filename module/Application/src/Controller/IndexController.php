@@ -10,8 +10,9 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Entity\Online;
-use User\Entity\User;
+//use Application\Entity\Online;
+use Application\Entity\User;
+use Application\Entity\Setting;
 
 class IndexController extends AbstractActionController {
 
@@ -51,20 +52,25 @@ class IndexController extends AbstractActionController {
         //$entityManager = $container->get('doctrine.entitymanager.orm_default');   
         //$online = $entityManager->getRepository(Online::class)->findAll();
         //$onlines = $this->entityManager->getRepository(Online::class)->findAll();
-
         //$onlines = $this->entityManager->getRepository(Online::class)->findAllByStatus("normalni");
+        //$onlines = $this->entityManager->getRepository(Online::class)->NajdiOnline(1)->getResult();
+
+
+        
+
+        /* @var $userRepository \Application\Repository\UserRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+
+        /* @var $user \Application\Entity\User */
+        $userOnline = $userRepository->NajdiOnlineUsers();
         
         
-        $onlines = $this->entityManager->getRepository(Online::class)->NajdiOnline(1)->getResult();
-        
-        
+         //$settingRepository->NajdiNastaveniDleIdUser($id_user);
+        //$userOnline = $this->entityManager->getRepository(User::class)->GetOnlineUsers();
+
+
         //$vystup = $onlines->getSQL();
-        
         //var_dump($onlines);
-        
-        
-
-
         //$kus = $this->entityManager->getRepository(Online::class)->findByIdOnline(1);
         //    $user = $this->entityManager->getRepository(User::class)
         //             ->findOneByEmail($this->identity());
@@ -73,39 +79,37 @@ class IndexController extends AbstractActionController {
         //echo "</br></br></br>TEST";
 
         return new ViewModel([
-            'onlines' => $onlines
+            'onlines' => $userOnline
         ]);
         // Find the post by ID
     }
-    
+
     /**
      * The "settings" action displays the info about currently logged in user.
      */
-    public function settingsAction()
-    {
+    public function settingsAction() {
         $id = $this->params()->fromRoute('id');
-        
-        if ($id!=null) {
+
+        if ($id != null) {
             $user = $this->entityManager->getRepository(User::class)
                     ->find($id);
         } else {
             $user = $this->currentUser();
         }
-        
-        if ($user==null) {
+
+        if ($user == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
-        
-        if (!$this->access('profile.any.view') && 
-            !$this->access('profile.own.view', ['user'=>$user])) {
+
+        if (!$this->access('profile.any.view') &&
+                !$this->access('profile.own.view', ['user' => $user])) {
             return $this->redirect()->toRoute('not-authorized');
         }
-        
+
         return new ViewModel([
             'user' => $user
         ]);
-    }    
-    
+    }
 
 }
