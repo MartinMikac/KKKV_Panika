@@ -1,10 +1,60 @@
+<script>
 
 
-<div>
-    Přihlášení uživatelé
+    //setInterval( getData, 3000);
+
+
+    //setInterval(getData, 3000);
+    
+    getData();
+    
+    function alertFunc() {
+        //alert("Hello!");
+    }
+
+    function getData()
+    {
+        //alert("Hello");
+
+        //$data = $this - > _request - > getPost();
+        //        echo $id = $data['id'];
+        //        echo $details = $data['details'];
+        //this wont work;
+
+        $.ajax({
+            url: '/tutorial/ajax',
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            success: function (data, status) {
+                var e = $('<tr><th>Author</th><th>Title</th><th>Picture</th></tr>');
+                $('#book').html('');
+                $('#book').append(e);
+                for (i = 0; i < data.length; i++) {
+                    book = data[i];
+                    var e = $('<tr><td id = "author"></td><td id = "title"></td><td id="imagepath"><img src = ""/></td> < /tr>');
+                    $('#author', e).html(book['author']);
+                    $('#title', e).html(book['title']);
+                    $('#imagepath img', e).attr('src', book['imagepath']);
+                    $('#book').append(e);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert('Ajax request failed.');
+            }
+        });
+    }
+    ;
+
+
+
+</script>
+
+<        div>
+Přihláš             ení uživatelé
 </div>
 
-<h4>
+<h4    >        
 
 
 
@@ -18,12 +68,12 @@
 
 <?php foreach ($onlines as $online): ?>
 
-    <h3>
-        <a href="#">
-            <?php //echo $this->escapeHtml($online->getJmeno());  ?>
-            <?php //echo $this->escapeHtml($online->getIdOnline()); ?>
-        </a>    
-    </h3>
+<h3>
+    <a href=            "#">
+        <?php //echo $this->escapeHtml($online->getJmeno());  ?>
+        <?php //echo $this->escapeHtml($online->getIdOnline()); ?>
+    </a>    
+</h3>
 
 <?php endforeach; ?>
 
@@ -43,7 +93,7 @@
 
         <?php $pocitadlo = 1; ?>
 
-        
+
         <?php foreach ($onlines as $online): ?>
 
 

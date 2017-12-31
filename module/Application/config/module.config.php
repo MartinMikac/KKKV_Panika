@@ -27,6 +27,16 @@ return [
                     ],
                 ],
             ],
+            'ajax' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/ajax',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'ajax',
+                    ],
+                ],
+            ],
             'login' => [
                 'type' => Literal::class,
                 'options' => [
@@ -99,7 +109,7 @@ return [
         'controllers' => [
             Controller\IndexController::class => [
                 // Allow anyone to visit "index" and "about" actions
-                ['actions' => ['index', 'about'], 'allow' => '*'],
+                ['actions' => ['index', 'about','ajax'], 'allow' => '*'],
                 // Allow authorized users to visit "settings" action
                 ['actions' => ['settings'], 'allow' => '@']
             ],
@@ -140,6 +150,7 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
+        'strategies' => array('ViewJsonStrategy',),
     ],
     'doctrine' => [
         'driver' => [

@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true">
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
     <testsuites>
-        <testsuite name="panika">
-            <directory>./module/Application/test</directory>
-        </testsuite>
-    </testsuites>
+      <testsuite name="panika2">
+        <directory>./module/Application/test</directory>
+        <file>./module/Application/testController/IndexControllerTest.php</file>
+      </testsuite>
+    </testsuites>    
 </phpunit>
