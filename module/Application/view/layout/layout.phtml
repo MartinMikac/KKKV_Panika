@@ -26,26 +26,27 @@
                 //->prependFile($this->basePath('js/bootstrap.min.js'))
                 ->prependFile($this->basePath('js/bootstrap.bundle.min.js'))
                 ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+                ->prependFile($this->basePath('js/date.format.js'))
         ?>
     </head>
 
     <body>    
 
 
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                // Check if the activeMenuItemId passed to layout view model
-                // and if so, use it for setting active navbar item.
-                if (isset($activeMenuItemId)) {
-                    $this->mainMenu()->setActiveItemId($activeMenuItemId);
-                }
 
-                // Render the navbar
-                echo $this->mainMenu()->render();
-                ?>                
-            </div>
+        <div class="col-md-12">
+            <?php
+            // Check if the activeMenuItemId passed to layout view model
+            // and if so, use it for setting active navbar item.
+            if (isset($activeMenuItemId)) {
+                $this->mainMenu()->setActiveItemId($activeMenuItemId);
+            }
+
+            // Render the navbar
+            echo $this->mainMenu()->render();
+            ?>                
         </div>
+
 
         <?php
         /*
@@ -54,15 +55,19 @@
          */
         /*
           <div class="row">
-            <div class="col-md-12">
-                <!-- Breadcrumbs -->
-                <?php //$this->pageBreadcrumbs()->render(); ?>
-            </div>
+          <div class="col-md-12">
+          <!-- Breadcrumbs -->
+          <?php //$this->pageBreadcrumbs()->render(); ?>
+          </div>
           </div>
          */
         ?>
 
-        <div class="container col-md-8 container jumbotron">
+        <?php
+        // původně pro úspěšné phpUnit
+        //<div class="container col-md-8 container jumbotron">
+        ?>
+        <div class="container col-md-8 jumbotron">
             <?= $this->content ?>
             <hr>
             <footer>

@@ -181,6 +181,23 @@ class UserManager
         return false;
     }
     
+    
+    /**
+     * Checks that the given password is correct.
+     */
+    public function setNewOnlineTime(\User\Entity\User $user) 
+    {
+        //$currentDate = date('Y-m-d H:i:s');
+        
+        $aktualni_datum = new \DateTime("now");
+        $aktualni_datum->format('Y-m-d H:i:s');
+        
+        $user->setLastOnline($aktualni_datum);  
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+        
+    }    
+    
     /**
      * Generates a password reset token for the user. This token is then stored in database and 
      * sent to the user's E-mail address. When the user clicks the link in E-mail message, he is 

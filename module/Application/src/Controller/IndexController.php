@@ -14,6 +14,7 @@ use Zend\View\Model\JsonModel;
 //use Application\Entity\Online;
 use Application\Entity\User;
 use Application\Entity\Setting;
+use User\Service\UserManager;
 
 class IndexController extends AbstractActionController {
 
@@ -31,10 +32,17 @@ class IndexController extends AbstractActionController {
     private $entityManager;
 
     /**
+     * user manager.
+     * @var $userManager User\Service\UserManager
+     */
+    private $userManager;
+
+    /**
      * Constructor. Its purpose is to inject dependencies into the controller.
      */
-    public function __construct($entityManager) {
+    public function __construct($entityManager, $userManager) {
         $this->entityManager = $entityManager;
+        $this->userManager = $userManager;
     }
 
     public function indexAction() {
@@ -115,18 +123,43 @@ class IndexController extends AbstractActionController {
         //$data = $this->bookTable->fetchAll();
         $request = $this->getRequest();
         $query = $request->getQuery();
+
+        $user = $this->currentUser();
+
+        if ($user != null) {
+
+
+            /* @var $userManager \User\Service\UserManager */
+            $userManager = $this->userManager;
+
+            $userManager->setNewOnlineTime($user);
+
+            /* @var $userRepository \Application\Repository\UserRepository */
+            $userRepository = $this->entityManager->getRepository(User::class);
+
+            /* @var $user \Application\Entity\User */
+            $userOnline = $userRepository->NajdiOnlineUsersJson();
+        } else {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+
         if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
             $jsonData = array();
             $idx = 0;
-//            foreach ($data as $sampledata) {
-                $temp = array(
-                    'author' => "autor",
-                    'title' => "title",
-                    'imagepath' => "imagepath"
-                );
-                $jsonData[$idx++] = $temp;
-            //}
-            $view = new JsonModel($jsonData);
+            //
+            //            foreach ($data as $sampledata) {
+                            $temp = array(
+                                'author' => "autor",
+                                'title' => "title",
+                                'imagepath' => "imagepath"
+                            );
+                            $jsonData[$idx++] = $temp;
+            //            }
+            
+            $view = new JsonModel($userOnline);
+            //$view = new JsonModel($jsonData);
             $view->setTerminal(true);
         } else {
             $view = new ViewModel();

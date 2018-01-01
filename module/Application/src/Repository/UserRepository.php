@@ -46,53 +46,40 @@ class UserRepository extends EntityRepository {
 
         $queryBuilder = $entityManager->createQueryBuilder();
 
-        /* $queryBuilder->select('u')
-          ->select('s')
-          ->from(User::class, 'u')
-          //->from(Setting::class, 's')
-          ->join('s.user_id', 'u')
-          ->where('u.id = s.user_id and u.last_online > :datum')
-          ->setParameter(':datum',new \DateTime('-2 day'), \Doctrine\DBAL\Types\Type::DATETIME);
-         */
+        $queryBuilder->select('p','t')
+            ->from(Setting::class, 'p')
+            ->join('p.user', 't')
+            ->where('t.id = p.user_id')
+            ->where('t.last_online > :datum')
+            ->setParameter(':datum',new \DateTime('-5 minute'), \Doctrine\DBAL\Types\Type::DATETIME);
+            
+        $navrat = $queryBuilder->getQuery()->getResult(Query::HYDRATE_OBJECT);
 
-        /*
-          $queryBuilder
+        return $navrat;
+    }
 
-        $queryBuilder->select('p')
-            ->from(Post::class, 'p')
-            ->join('p.tags', 't')
-            ->where('p.status = ?1')
-            ->orderBy('p.dateCreated', 'DESC')
-            ->setParameter('1', Post::STATUS_PUBLISHED);
+    
+        /**
+     * Retrieves all users with last online is no more then 5 minutes
+     * @return Query
+     */
+    public function NajdiOnlineUsersJson() {
+        $entityManager = $this->getEntityManager();
 
 
-
-         */
+        $queryBuilder = $entityManager->createQueryBuilder();
 
         $queryBuilder->select('p','t')
             ->from(Setting::class, 'p')
             ->join('p.user', 't')
             ->where('t.id = p.user_id')
             ->where('t.last_online > :datum')
-            ->setParameter(':datum',new \DateTime('-2 day'), \Doctrine\DBAL\Types\Type::DATETIME);
+            ->setParameter(':datum',new \DateTime('-5 minute'), \Doctrine\DBAL\Types\Type::DATETIME);
             
-        
-        
-        /*$queryBuilder
-                ->select('s.cele_jmeno', 'u.last_online')
-                ->from(Setting::class, 's')
-                ->innerJoin(Setting::class, User::class, 'WITH', 'u.id = s.user_id');
-          */      
+        //$navrat = $queryBuilder->getQuery()->getResult(Query::HYDRATE_SCALAR)->exportTo('json');
+        $navrat = $queryBuilder->getQuery()->getArrayResult();
+        //$myArray = $query->getArrayResult();
 
-        //->where('u.id = s.user_id and u.last_online > :datum')                
-        //->where('u.last_online > :datum')
-        //->setParameter(':datum',new \DateTime('-2 day'), \Doctrine\DBAL\Types\Type::DATETIME);
-        ;
-
-        $navrat = $queryBuilder->getQuery()->getResult(Query::HYDRATE_OBJECT);
-
-        //return $queryBuilder->getQuery()->getResult(Query::HYDRATE_OBJECT) ;
         return $navrat;
     }
-
 }

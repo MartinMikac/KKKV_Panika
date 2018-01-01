@@ -5,7 +5,7 @@ $this->mainMenu()->setActiveItemId('login');
 
 $form->get('email')->setAttributes([
     'class'=>'form-control', 
-    'placeholder'=>'Email address',
+    'placeholder'=>'E-mailová adresa',
     'required' => true,
     'autofocus' => true
     ])
@@ -15,7 +15,7 @@ $form->get('email')->setAttributes([
 
 $form->get('password')->setAttributes([
     'class'=>'form-control', 
-    'placeholder'=>'Password',
+    'placeholder'=>'Heslo',
     'required' => true,
     ])
     ->setLabelAttributes([
@@ -24,13 +24,13 @@ $form->get('password')->setAttributes([
 ?>
 
 <div class="row">
-    <div class="col-md-offset-4 col-md-3">
+    <div class="col-md-offset-4 col-md-5">
         <form class="form-signin" method="post">
-            <h2 class="form-signin-heading">Please sign in</h2>
+            <h2 class="form-signin-heading">Prosím přihlašte se</h2>
             <?php if ($isLoginError): ?>
             <div class="alert alert-warning" role="alert">
                 Incorrect login and/or password. 
-                <a href="<?= $this->url('reset-password') ?>">Forgot password?</a>
+                <a href="<?= $this->url('reset-password') ?>">Zapoměli jste heslo?</a>
             </div>
             <?php endif; ?>
             <?= $this->formLabel($form->get('email')); ?>
@@ -39,7 +39,7 @@ $form->get('password')->setAttributes([
             <?= $this->formElement($form->get('password')); ?>
             <div class="checkbox">
                 <label>
-                    <?= $this->formElement($form->get('remember_me')); ?> Remember me
+                    <?= $this->formElement($form->get('remember_me')); ?> zapamatovat
                 </label>
             </div>
             <?= $this->formElement($form->get('redirect_url')); ?>

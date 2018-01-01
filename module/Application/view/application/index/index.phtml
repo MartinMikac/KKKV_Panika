@@ -1,13 +1,10 @@
 <script>
 
 
-    //setInterval( getData, 3000);
+    setInterval(getData, 10000);
 
+    //getData();
 
-    //setInterval(getData, 3000);
-    
-    getData();
-    
     function alertFunc() {
         //alert("Hello!");
     }
@@ -22,63 +19,117 @@
         //this wont work;
 
         $.ajax({
-            url: '/tutorial/ajax',
+            url: '/ajax',
             type: 'POST',
             dataType: 'json',
             async: true,
             success: function (data, status) {
+
+
+                var body = document.body;
+                var tbl = document.createElement('tbody');
+                tbl.setAttribute("id", "uzivatele_online");
+                
+                var pocitadlo = 1;
+                for (i = 0; i < data.length; i++) {
+                    user = data[i];
+                    var tr = tbl.insertRow();
+                    
+//var tr = document.getElementById('table').tHead.children[0],
+    
+//th.innerHTML = "Second";
+//tr.appendChild(th);                    
+                    
+
+//tr.insertCell(1).outerHTML = "<th>Second</th>"
+                    
+                    var td = tr.insertCell();
+                    td.setAttribute("scope","row");
+                    td.outerHTML = "<th>" + pocitadlo +"</th>";
+                    td.appendChild(document.createTextNode(pocitadlo));                    
+                    
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode(user['cele_jmeno']));
+                    
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode(user['umisteni']));                    
+                    
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode(user['telefon']));
+                    
+                    var dt_last_online = user.user.last_online.date;
+                    var cas = dt_last_online.substr(0,dt_last_online.length-7);
+                    
+                    // Split timestamp into [ Y, M, D, h, m, s ]
+                    //var t = "2010-06-09 13:12:01".split(/[- :]/);
+                    var t = cas.split(/[- :]/);
+
+                    // Apply each element to the Date function
+                    var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+                    //var dateFormat = require('dateformat');
+                    
+                    
+
+                    
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode(dateFormat(cas, "dd.mm.yyyy HH:MM:ss")));
+                    
+                    pocitadlo++;
+                    
+                }
+                
+
+                /*for (var i = 0; i < 3; i++) {
+                    var tr = tbl.insertRow();
+                    for (var j = 0; j < 2; j++) {
+                        if (i == 2 && j == 1) {
+                            break;
+                        } else {
+                            var td = tr.insertCell();
+                            td.appendChild(document.createTextNode('Cell'));
+                            td.style.border = '1px solid black';
+                            if (i == 1 && j == 1) {
+                                td.setAttribute('rowSpan', '2');
+                            }
+                        }
+                    }
+
+
+                }*/
+                //uzivatele_online
+                var item = document.getElementById("uzivatele_online");
+                item.parentNode.removeChild(item);
+
+                document.getElementById("uzivatele_online_table").appendChild(tbl);
+                //body.appendChild(tbl);
+
+                /*
                 var e = $('<tr><th>Author</th><th>Title</th><th>Picture</th></tr>');
                 $('#book').html('');
                 $('#book').append(e);
                 for (i = 0; i < data.length; i++) {
                     book = data[i];
                     var e = $('<tr><td id = "author"></td><td id = "title"></td><td id="imagepath"><img src = ""/></td> < /tr>');
-                    $('#author', e).html(book['author']);
-                    $('#title', e).html(book['title']);
+                    $('#author', e).html(book['cele_jmeno']);
+                    $('#title', e).html(book['telefon']);
                     $('#imagepath img', e).attr('src', book['imagepath']);
                     $('#book').append(e);
-                }
+                }*/
             },
             error: function (xhr, textStatus, errorThrown) {
-                alert('Ajax request failed.');
+                //alert('Ajax požadavek je chybný! Zavolejte na IT.');
             }
         });
     }
     ;
 
-
-
 </script>
 
-<        div>
-Přihláš             ení uživatelé
+<div >
+    Přihlášení uživatelé
 </div>
 
-<h4    >        
-
-
-
-
-
-
-</h4>
-
-
-
-
-<?php foreach ($onlines as $online): ?>
-
-<h3>
-    <a href=            "#">
-        <?php //echo $this->escapeHtml($online->getJmeno());  ?>
-        <?php //echo $this->escapeHtml($online->getIdOnline()); ?>
-    </a>    
-</h3>
-
-<?php endforeach; ?>
-
-
-<table class="table">
+<table class="table" id="uzivatele_online_table">
     <thead class="thead-inverse">
         <tr>
             <th>#</th>
@@ -89,7 +140,7 @@ Přihláš             ení uživatelé
         </tr>
     </thead>
 
-    <tbody>
+    <tbody id="uzivatele_online">
 
         <?php $pocitadlo = 1; ?>
 
@@ -110,7 +161,7 @@ Přihláš             ení uživatelé
                     <?= $this->escapeHtml($online->getTelefon()); ?>        
                 </td>
                 <td>
-                    <?= $this->escapeHtml($online->getLastOnline()->format("d.m.Y H:i:s")) ?>
+                    <?= $this->escapeHtml($online->getUser()->getLastOnline()->format("d.m.Y H:i:s")) ?>
                 </td>
             </tr>
             <?php $pocitadlo++; ?>   

@@ -109,9 +109,9 @@ return [
         'controllers' => [
             Controller\IndexController::class => [
                 // Allow anyone to visit "index" and "about" actions
-                ['actions' => ['index', 'about','ajax'], 'allow' => '*'],
+                //['actions' => ['index', 'about','ajax'], 'allow' => '*'],
                 // Allow authorized users to visit "settings" action
-                ['actions' => ['settings'], 'allow' => '@']
+                ['actions' => ['index', 'about','ajax','settings'], 'allow' => '@']
             ],
             Controller\SettingController::class => [
                 // Allow anyone to visit "index" and "about" actions

@@ -56,6 +56,13 @@ class User
      * @ORM\Column(name="pwd_reset_token_creation_date")  
      */
     protected $passwordResetTokenCreationDate;
+
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $last_online;
+
     
     /**
      * @ORM\ManyToMany(targetEntity="User\Entity\Role")
@@ -242,6 +249,31 @@ class User
     {
         $this->passwordResetTokenCreationDate = $date;
     }
+
+
+    /**
+     * Set the value of last_online.
+     *
+     * @param \DateTime $last_online
+     * @return \User\Entity\User
+     */
+    public function setLastOnline($last_online)
+    {
+        $this->last_online = $last_online;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of last_online.
+     *
+     * @return \DateTime
+     */
+    public function getLastOnline()
+    {
+        return $this->last_online;
+    }
+    
     
     /**
      * Returns the array of roles assigned to this user.

@@ -43,18 +43,14 @@ class NavManager
         $url = $this->urlHelper;
         $items = [];
         
-        $items[] = [
-            'id' => 'home',
-            'label' => 'Domů',
-            'link'  => $url('home')
-        ];
+
         
-        $items[] = [
+/*        $items[] = [
             'id' => 'about',
             'label' => 'about',
             'link'  => $url('about')
         ];
-        
+*/        
         // Display "Login" menu item for not authorized user only. On the other hand,
         // display "Admin" and "Logout" menu items only for authorized users.
         if (!$this->authService->hasIdentity()) {
@@ -65,6 +61,11 @@ class NavManager
                 'float' => 'right'
             ];
         } else {
+        $items[] = [
+            'id' => 'home',
+            'label' => 'Domů',
+            'link'  => $url('home')
+        ];
             
             // Determine which items must be displayed in Admin dropdown.
             $adminDropdownItems = [];
@@ -107,13 +108,8 @@ class NavManager
                 'float' => 'right',
                 'dropdown' => [
                     [
-                        'id' => 'settings',
-                        'label' => 'Nastavení',
-                        'link' => $url('application', ['action'=>'settings'])
-                    ],
-                    [
                         'id' => 'nastaveni',
-                        'label' => 'Nastavení - NEW!!',
+                        'label' => 'Nastavení',
                         'link' => $url('nastaveni')
                     ],                    
                     [

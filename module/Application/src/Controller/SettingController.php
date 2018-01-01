@@ -128,10 +128,11 @@ class SettingController extends AbstractActionController {
                 // Redirect the user to "admin" page.
                 return $this->redirect()->toRoute('nastaveni', ['action' => 'index']);
             } else {
-                echo "NEVALIDNI";
+                /*echo "NEVALIDNI";
                 print_r($form->getMessages()); //error messages
                 print_r($form->getErrors()); //error codes
                 print_r($form->getErrorMessages()); //any custom error messages
+                 */
             }
         } else {
             $data = [
