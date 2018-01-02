@@ -166,5 +166,47 @@ class IndexController extends AbstractActionController {
         }
         return $view;
     }
+    
+/**
+     * The "ALERT" action displays the info about currently logged in user.
+     */
+    public function alertAction() {
+
+
+
+        return $this->redirect()->toRoute('home');
+    }    
+
+/**
+     * The "ALERT" action displays the info about currently logged in user.
+     */
+    public function checkAlertAction() {
+
+        $request = $this->getRequest();
+        $query = $request->getQuery();
+
+        if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
+            $jsonData = array();
+            $idx = 0;
+            //
+            //            foreach ($data as $sampledata) {
+                            $temp = array(
+                                'isAlert' => "false",
+                                'jmeno' => "Novák"
+                            );
+                            $jsonData[$idx++] = $temp;
+            //            }
+            
+            //$view = new JsonModel($userOnline);
+            $view = new JsonModel($jsonData);
+            $view->setTerminal(true);
+        } else {
+            $view = new ViewModel();
+        }
+        return $view;        
+        
+    }    
+    
+    
 
 }

@@ -27,6 +27,16 @@ return [
                     ],
                 ],
             ],
+            'check-alert' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/check-alert',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'checkAlert',
+                    ],
+                ],
+            ],
             'ajax' => [
                 'type' => Literal::class,
                 'options' => [
@@ -34,6 +44,16 @@ return [
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action' => 'ajax',
+                    ],
+                ],
+            ],
+            'alert' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/alert',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'alert',
                     ],
                 ],
             ],
@@ -111,7 +131,7 @@ return [
                 // Allow anyone to visit "index" and "about" actions
                 //['actions' => ['index', 'about','ajax'], 'allow' => '*'],
                 // Allow authorized users to visit "settings" action
-                ['actions' => ['index', 'about','ajax','settings'], 'allow' => '@']
+                ['actions' => ['index', 'about', 'ajax','checkAlert', 'alert', 'settings'], 'allow' => '@']
             ],
             Controller\SettingController::class => [
                 // Allow anyone to visit "index" and "about" actions
