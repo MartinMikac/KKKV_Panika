@@ -47,6 +47,16 @@ return [
                     ],
                 ],
             ],
+            'alertOver' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/alertOver',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'alertOver',
+                    ],
+                ],
+            ],
             'alert' => [
                 'type' => Literal::class,
                 'options' => [

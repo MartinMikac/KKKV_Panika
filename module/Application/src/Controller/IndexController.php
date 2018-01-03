@@ -191,8 +191,10 @@ class IndexController extends AbstractActionController {
             //
             //            foreach ($data as $sampledata) {
                             $temp = array(
-                                'isAlert' => "false",
-                                'jmeno' => "Novák"
+                                'isAlert' => "true",
+                                'cele_jmeno' => "Novák",
+                                'umisteni' => "Čítárna",
+                                'telefon' => "723 027 278"
                             );
                             $jsonData[$idx++] = $temp;
             //            }

@@ -18,18 +18,65 @@
 
 
                 //var body = document.body;
+                var div = document.createElement('div');
+                div.setAttribute("class", "badge-danger col-md-8");
                 var tbl = document.createElement('table');
                 tbl.setAttribute("id", "alert_table");
-                tbl.setAttribute("class", "badge-danger col-md-8");
+                //tbl.setAttribute("class", "badge-danger col-md-8");
 
                 var isAlertL = false;
+
+                /*
+                 echo " <p> ";
+                 echo " <H3 style=\"color: red;\">Stiknuto tlačítko paniky!</H3> ";    		    
+                 echo "<br/>";
+                 echo "Jméno: ". $alert->cele_jmeno;
+                 echo "<br/>";
+                 echo "Kde: ". $alert->umisteni;
+                 echo "<br/>";
+                 echo "Telefon: ". $alert->telefon;
+                 echo "<br/>";
+                 */
 
                 var pocitadlo = 1;
                 for (i = 0; i < data.length; i++) {
                     user = data[i];
                     var tr = tbl.insertRow();
                     var td = tr.insertCell();
-                    td.appendChild(document.createTextNode(user['isAlert']));
+
+                    var nadpis = document.createElement('H3');
+                    nadpis.appendChild(document.createTextNode('Stiknuto tlačítko paniky!'));
+
+                    td.appendChild(nadpis);
+
+
+                    tr = tbl.insertRow();
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode('Jméno: ' + user['cele_jmeno']));
+
+                    tr = tbl.insertRow();
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode('Kde: ' + user['umisteni']));
+
+                    tr = tbl.insertRow();
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode('Oddělení: ' + user['telefon']));
+
+                    tr = tbl.insertRow();
+                    var td = tr.insertCell();
+
+                    var form_1 = document.createElement('form');
+                    form_1.setAttribute("name", "alertOver");
+                    form_1.setAttribute("action", "<?= $this->url('alertOver') ?>");
+                    form_1.setAttribute("method", "POST");
+
+                    var button_over = document.createElement('button');
+                    button_over.setAttribute("class", "btn btn-lg btn-primary btn-block col-md-12 offset-md-0");
+                    button_over.setAttribute("type", "submit");
+                    button_over.appendChild(document.createTextNode('Problém vyřešen'));
+
+                    form_1.appendChild(button_over);
+                    td.appendChild(form_1);
 
                     if (user['isAlert'] == "true") {
                         isAlertL = true;
@@ -37,13 +84,15 @@
 
                     pocitadlo++;
 
+
                 }
 
                 if (isAlertL == true) {
-                    document.getElementById("active_alert").appendChild(tbl);
+                    div.appendChild(tbl);
+                    document.getElementById("active_alert").appendChild(div);
                 }
 
-                
+
                 //body.appendChild(tbl);
 
 
@@ -140,9 +189,7 @@
     </form>
 </div>
 
-<div id="active_alert" class="col-lg-8" style="margin-top: 5px;">
-
-</div>
+<div id="active_alert" class="col-lg-8" style="margin-top: 20px; margin-bottom: 50px;"></div>
 
 <table class="table" id="uzivatele_online_table">
     <thead class="thead-inverse">
