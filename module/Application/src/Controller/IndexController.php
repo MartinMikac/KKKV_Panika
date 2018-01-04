@@ -15,6 +15,10 @@ use Zend\View\Model\JsonModel;
 use Application\Entity\User;
 use Application\Entity\Setting;
 use User\Service\UserManager;
+use Zend\Mail;
+//use Zend\Mail\Message;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
 
 class IndexController extends AbstractActionController {
 
@@ -188,7 +192,73 @@ class IndexController extends AbstractActionController {
         /* @var $alertManager \Application\Service\AlertManager */
         $alertManager = $this->alertManager;
         $alertManager->addNewAlert($id_user);
-        
+
+
+        $mail = new Mail\Message();
+        $mail->setBody('This is the text of the email.');
+        $mail->setFrom('mikac@knihovnakv.cz', "Miki");
+        $mail->addTo('mikac@knihovnakv.cz', "Miki");
+        $mail->setSubject('TestSubject - PANIKA!');
+
+        //$transport = new Mail\Transport\Sendmail();
+        //$transport->send($mail);
+
+        // Setup SMTP transport using LOGIN authentication
+        $transport = new SmtpTransport();
+        $options = new SmtpOptions([
+            'name' => 'mail.knihovnakv.cz',
+            'host' => '192.168.1.203',
+            'connection_class' => 'login',
+            'connection_config' => [
+                'username' => 'mikac',
+                'password' => 'Hellmaker007',
+            ],
+        ]);
+        $transport->setOptions($options);
+        $transport->send($mail);
+
+
+
+
+        return $this->redirect()->toRoute('home');
+    }
+
+    /**
+     * The "ALERT" action displays the info about currently logged in user.
+     */
+    public function panikaAction() {
+
+
+        $view = new ViewModel();
+
+        return $view;
+    }
+
+    /**
+     * The "ALERT" action displays the info about currently logged in user.
+     */
+    public function alertOverAction() {
+
+        $id = $this->params()->fromRoute('value');
+
+        if ($id == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+
+
+        /* @var $user \User\Entity\User */
+        $user = $this->currentUser();
+        $id_user = $user->getId();
+
+
+
+        /* @var $alertManager \Application\Service\AlertManager */
+        $alertManager = $this->alertManager;
+        //$alertManager->addNewAlert($id_user);
+        $alertManager->closeAlert($id_user, $id);
+
         return $this->redirect()->toRoute('home');
     }
 
@@ -201,17 +271,17 @@ class IndexController extends AbstractActionController {
         $query = $request->getQuery();
 
         if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
-            
-            
-            
+
+
+
             /* @var $userRepository \Application\Repository\UserRepository */
             $userRepository = $this->entityManager->getRepository(User::class);
 
             /* @var $user \Application\Entity\User */
-            $userOnline = $userRepository->NajdiAlertsUsersJson();
-            
-            
-            
+            $alerts = $userRepository->NajdiAlertsUsersJson();
+
+
+
             $jsonData = array();
             $idx = 0;
             //
@@ -224,7 +294,7 @@ class IndexController extends AbstractActionController {
             );
             $jsonData[$idx++] = $temp;
             //            }
-            $view = new JsonModel($userOnline);
+            $view = new JsonModel($alerts);
             //$view = new JsonModel($jsonData);
             $view->setTerminal(true);
         } else {

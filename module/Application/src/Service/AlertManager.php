@@ -28,6 +28,32 @@ class AlertManager {
     public function __construct($entityManager) {
         $this->entityManager = $entityManager;
     }
+    
+    
+    /**
+     * This method adds a new post.
+     */
+    public function closeAlert($user_id,$id_alert) {
+        
+        /* @var $user \User\Entity\User */
+        $user = $this->entityManager->getRepository(User::class)->findOneById($user_id);
+        
+        /* @var $alert \Application\Entity\Alert */
+        $alert = $this->entityManager->getRepository(Alert::class)->findOneById($id_alert);        
+        
+        $alert->setIsActive(false);
+
+        $aktualni_datum = new \DateTime("now");
+        $aktualni_datum->format('Y-m-d H:i:s');
+        $alert->setCasKonec($aktualni_datum);
+        $alert->setVyresil("Vyřešil id: ".$user->getId());
+
+        // Add the entity to entity manager.
+        $this->entityManager->persist($alert);
+
+        // Apply changes to database.
+        $this->entityManager->flush();
+    }    
 
     /**
      * This method adds a new post.
@@ -53,46 +79,4 @@ class AlertManager {
         // Apply changes to database.
         $this->entityManager->flush();
     }
-
-    /**
-     * This method allows to update data of a single post.
-     */
-    public function updateAdmin(\Application\Entity\Setting $setting, $data) {
-
-
-//        echo $data['id'];
-
-        /* @var $user \User\Entity\User */
-        $user = $this->entityManager->getRepository(User::class)->findOneById($data['id']);
-
-        $setting->setCeleJmeno($data['cele_jmeno']);
-        $setting->setUmisteni($data['umisteni']);
-        //$setting->setEmail($data['email']);
-        $setting->setTelefon($data['telefon']);
-
-
-        $aktualni_datum = new \DateTime("now");
-        $aktualni_datum->format('Y-m-d H:i:s');
-
-        $setting->setLastOnline($aktualni_datum);
-
-
-
-
-
-
-        if (strlen($data['heslo']) > 1) {
-
-            $bcrypt = new Bcrypt();
-            $passwordHash = $bcrypt->create($data['heslo']);
-
-            $setting->setHeslo($passwordHash);
-            //$user->setHeslo(password_hash($data['heslo'], PASSWORD_DEFAULT));
-            $user->setPassword($passwordHash);
-            $this->entityManager->persist($user);
-        }
-
-        $this->entityManager->flush();
-    }
-
 }

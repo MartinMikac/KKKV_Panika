@@ -60,8 +60,9 @@ class SettingManager {
         
         $setting = new Setting();
         $setting->setUserId($userData->getId());
-        $setting->setCeleJmeno("TEST");
-        $setting->setTelefon("72301111");
+        $setting->setCeleJmeno("Nenastaveno");
+        $setting->setTelefon("Nenastaveno");
+        $setting->setUmisteni("Nenastaveno");
         $setting->setUser($user);
         $setting->setEmail($userData->getEmail());
         

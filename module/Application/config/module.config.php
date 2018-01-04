@@ -37,6 +37,16 @@ return [
                     ],
                 ],
             ],
+            'panika' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/panika',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'panika',
+                    ],
+                ],
+            ],
             'ajax' => [
                 'type' => Literal::class,
                 'options' => [
@@ -48,9 +58,13 @@ return [
                 ],
             ],
             'alertOver' => [
-                'type' => Literal::class,
+                'type' => Segment::class,
                 'options' => [
-                    'route' => '/alertOver',
+                    'route' => '/alertOver[/:id[/:value]]',
+                    'constraints' => [
+                        'id' => '[a-zA-Z0-9_-]*',
+                        'value' => '[a-zA-Z0-9_-]*',
+                    ],
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action' => 'alertOver',
@@ -140,9 +154,9 @@ return [
         'controllers' => [
             Controller\IndexController::class => [
                 // Allow anyone to visit "index" and "about" actions
-                //['actions' => ['index', 'about','ajax'], 'allow' => '*'],
+                ['actions' => ['index', 'about','ajax'], 'allow' => '*'],
                 // Allow authorized users to visit "settings" action
-                ['actions' => ['index', 'about', 'ajax','checkAlert', 'alert', 'settings'], 'allow' => '@']
+                ['actions' => ['index', 'about', 'ajax', 'checkAlert', 'alert', 'settings', 'alertOver', 'panika'], 'allow' => '@']
             ],
             Controller\SettingController::class => [
                 // Allow anyone to visit "index" and "about" actions

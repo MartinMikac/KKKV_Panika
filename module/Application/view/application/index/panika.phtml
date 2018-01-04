@@ -1,15 +1,9 @@
 <script>
 
-
-    $(document).ready(function () {
-
-
-
-        getData();
         getAlert();
-        setInterval(getData, 5000);
-        setInterval(getAlert, 10000);
+        setInterval(getAlert, 5000);
         var isSendedAlert = false;
+
         function getAlert()
         {
             $.ajax({
@@ -99,8 +93,6 @@
                             //alert('Stisknuto tláčítko paniky!!');
                             //confirm("Panika!!");
                             //alert("Panika!!")
-                            window.open("<?= $this->url('panika') ?>","panika");
-                            isSendedAlert = true;
                         }
 
 
@@ -121,118 +113,17 @@
         }
 
 
-        function getData()
-        {
-            //alert("Hello");
-
-            //$data = $this - > _request - > getPost();
-            //        echo $id = $data['id'];
-            //        echo $details = $data['details'];
-            //this wont work;
-
-            $.ajax({
-                url: '/ajax',
-                type: 'POST',
-                dataType: 'json',
-                async: true,
-                success: function (data, status) {
 
 
-                    var body = document.body;
-                    var tbl = document.createElement('tbody');
-                    tbl.setAttribute("id", "uzivatele_online");
-                    var pocitadlo = 1;
-                    for (i = 0; i < data.length; i++) {
-                        user = data[i];
-                        var tr = tbl.insertRow();
-                        var td = tr.insertCell();
-                        td.setAttribute("scope", "row");
-                        td.outerHTML = "<th>" + pocitadlo + "</th>";
-                        td.appendChild(document.createTextNode(pocitadlo));
-                        var td = tr.insertCell();
-                        td.appendChild(document.createTextNode(user['cele_jmeno']));
-                        var td = tr.insertCell();
-                        td.appendChild(document.createTextNode(user['umisteni']));
-                        var td = tr.insertCell();
-                        td.appendChild(document.createTextNode(user['telefon']));
-                        var dt_last_online = user.user.last_online.date;
-                        var cas = dt_last_online.substr(0, dt_last_online.length - 7);
-                        // Split timestamp into [ Y, M, D, h, m, s ]
-                        //var t = "2010-06-09 13:12:01".split(/[- :]/);
-                        var t = cas.split(/[- :]/);
-                        // Apply each element to the Date function
-                        var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
-                        //var dateFormat = require('dateformat');
-
-
-
-
-                        var td = tr.insertCell();
-                        td.appendChild(document.createTextNode(dateFormat(cas, "dd.mm.yyyy HH:MM:ss")));
-                        pocitadlo++;
-                    }
-
-                    //uzivatele_online
-                    var item = document.getElementById("uzivatele_online");
-                    item.parentNode.removeChild(item);
-                    document.getElementById("uzivatele_online_table").appendChild(tbl);
-                    //body.appendChild(tbl);
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    //alert('Ajax požadavek je chybný! Zavolejte na IT.');
-                }
-            });
-        };
-    });
 </script>
-
-<div class="row align-items-center col-md-4" style="" >
-    <form class="col-md" name="alert" action="<?= $this->url('alert') ?>" method="POST">
-        <button class="btn btn-lg btn-primary btn-block btn-danger" type="submit">
-            <h3>Panika!!</h3>
-        </button>
-    </form>
-</div>
+<h2>Zkontrolujte prosím, aplikaci panika.</h2>
 
 <div id="active_alert" class="row align-items-center col-lg-7" style="margin-top: 20px; margin-bottom: 50px;"></div>
 
-<table class="table" id="uzivatele_online_table">
-    <thead class="thead-inverse">
-        <tr>
-            <th>#</th>
-            <th>Jméno</th>
-            <th>Oddělení</th>
-            <th>Telefon</th>
-            <th>Čas kontroly</th>
-        </tr>
-    </thead>
+<?php
 
-    <tbody id="uzivatele_online">
+/* 
+ * Zdrojový kód pouze pro interní potřebu Krajské knihovny Karlovy Vary.
+ * @ Martin Mikač - 2017  * 
+ */
 
-        <?php $pocitadlo = 1; ?>
-
-
-        <?php foreach ($onlines as $online): ?>
-
-
-            <tr>
-                <th scope="row"><?= $pocitadlo ?>   </th>
-
-                <td>
-                    <?= $this->escapeHtml($online->getCeleJmeno()); ?>        
-                </td>
-                <td>
-                    <?= $this->escapeHtml($online->getUmisteni()); ?>        
-                </td>
-                <td>
-                    <?= $this->escapeHtml($online->getTelefon()); ?>        
-                </td>
-                <td>
-                    <?= $this->escapeHtml($online->getUser()->getLastOnline()->format("d.m.Y H:i:s")) ?>
-                </td>
-            </tr>
-            <?php $pocitadlo++; ?>   
-        <?php endforeach; ?>        
-
-    </tbody>
-</table>
