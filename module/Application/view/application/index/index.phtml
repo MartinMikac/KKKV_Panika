@@ -3,8 +3,9 @@
 
     setInterval(getData, 3000);
 
+    setInterval(getAlert, 3000);
 
-    getAlert();
+    //getAlert();
 
 
     function getAlert()
@@ -20,6 +21,7 @@
                 //var body = document.body;
                 var div = document.createElement('div');
                 div.setAttribute("class", "badge-danger col-md-8");
+                div.setAttribute("id", "alert_div");
                 var tbl = document.createElement('table');
                 tbl.setAttribute("id", "alert_table");
                 //tbl.setAttribute("class", "badge-danger col-md-8");
@@ -71,12 +73,14 @@
                     form_1.setAttribute("method", "POST");
 
                     var button_over = document.createElement('button');
-                    button_over.setAttribute("class", "btn btn-lg btn-primary btn-block col-md-12 offset-md-0");
+                    button_over.setAttribute("class", "row btn btn-lg btn-primary btn-success btn-block col-lg offset-lg-0");
+                    button_over.setAttribute("style", "margin-bottom: 20px; margin-top: 20px;");
                     button_over.setAttribute("type", "submit");
                     button_over.appendChild(document.createTextNode('Problém vyřešen'));
 
                     form_1.appendChild(button_over);
                     td.appendChild(form_1);
+
 
                     if (user['isAlert'] == "true") {
                         isAlertL = true;
@@ -88,6 +92,16 @@
                 }
 
                 if (isAlertL == true) {
+
+                    
+                    var item = document.getElementById("alert_div");
+                    
+                    if (item != null){
+                        item.parentNode.removeChild(item);    
+                    }
+                        
+                    
+
                     div.appendChild(tbl);
                     document.getElementById("active_alert").appendChild(div);
                 }
@@ -181,15 +195,15 @@
 
 </script>
 
-<div >
-    <form name="alert" action="<?= $this->url('alert') ?>" method="POST">
-        <button class="btn btn-lg btn-danger btn-primary btn-block col-md-3 offset-md-1" type="submit">
-            Panika
+<div class="row align-items-center col-md-4" style="" >
+    <form class="col-md" name="alert" action="<?= $this->url('alert') ?>" method="POST">
+        <button class="btn btn-lg btn-primary btn-block btn-danger" type="submit">
+            <h3>Panika!!</h3>
         </button>
     </form>
 </div>
 
-<div id="active_alert" class="col-lg-8" style="margin-top: 20px; margin-bottom: 50px;"></div>
+<div id="active_alert" class="row align-items-center col-lg-7" style="margin-top: 20px; margin-bottom: 50px;"></div>
 
 <table class="table" id="uzivatele_online_table">
     <thead class="thead-inverse">
