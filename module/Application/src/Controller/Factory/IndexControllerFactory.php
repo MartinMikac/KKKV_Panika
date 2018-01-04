@@ -5,6 +5,7 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Application\Controller\IndexController;
 use User\Service\UserManager;
+use Application\Service\AlertManager;
 
 /**
  * This is the factory for IndexController. Its purpose is to instantiate the
@@ -18,9 +19,10 @@ class IndexControllerFactory implements FactoryInterface
         //$container->ge
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $userManager = $container->get(UserManager::class);
+        $alertManager = $container->get(AlertManager::class);
 
         ///var_dump($entityManager);
         // Instantiate the controller and inject dependencies
-        return new IndexController($entityManager, $userManager);
+        return new IndexController($entityManager, $userManager,$alertManager);
     }
 }

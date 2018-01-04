@@ -38,11 +38,18 @@ class IndexController extends AbstractActionController {
     private $userManager;
 
     /**
+     * alert manager.
+     * @var $alertManager Application\Service\AlertManager
+     */
+    private $alertManager;
+
+    /**
      * Constructor. Its purpose is to inject dependencies into the controller.
      */
-    public function __construct($entityManager, $userManager) {
+    public function __construct($entityManager, $userManager, $alertManager) {
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
+        $this->alertManager = $alertManager;
     }
 
     public function indexAction() {
@@ -150,14 +157,14 @@ class IndexController extends AbstractActionController {
             $idx = 0;
             //
             //            foreach ($data as $sampledata) {
-                            $temp = array(
-                                'author' => "autor",
-                                'title' => "title",
-                                'imagepath' => "imagepath"
-                            );
-                            $jsonData[$idx++] = $temp;
+            $temp = array(
+                'author' => "autor",
+                'title' => "title",
+                'imagepath' => "imagepath"
+            );
+            $jsonData[$idx++] = $temp;
             //            }
-            
+
             $view = new JsonModel($userOnline);
             //$view = new JsonModel($jsonData);
             $view->setTerminal(true);
@@ -166,18 +173,26 @@ class IndexController extends AbstractActionController {
         }
         return $view;
     }
-    
-/**
+
+    /**
      * The "ALERT" action displays the info about currently logged in user.
      */
     public function alertAction() {
 
+        /* @var $user \User\Entity\User */
+        $user = $this->currentUser();
+        $id_user = $user->getId();
 
 
+
+        /* @var $alertManager \Application\Service\AlertManager */
+        $alertManager = $this->alertManager;
+        $alertManager->addNewAlert($id_user);
+        
         return $this->redirect()->toRoute('home');
-    }    
+    }
 
-/**
+    /**
      * The "ALERT" action displays the info about currently logged in user.
      */
     public function checkAlertAction() {
@@ -186,29 +201,36 @@ class IndexController extends AbstractActionController {
         $query = $request->getQuery();
 
         if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
+            
+            
+            
+            /* @var $userRepository \Application\Repository\UserRepository */
+            $userRepository = $this->entityManager->getRepository(User::class);
+
+            /* @var $user \Application\Entity\User */
+            $userOnline = $userRepository->NajdiAlertsUsersJson();
+            
+            
+            
             $jsonData = array();
             $idx = 0;
             //
             //            foreach ($data as $sampledata) {
-                            $temp = array(
-                                'isAlert' => "true",
-                                'cele_jmeno' => "Novák",
-                                'umisteni' => "Čítárna",
-                                'telefon' => "723 027 278"
-                            );
-                            $jsonData[$idx++] = $temp;
+            $temp = array(
+                'isAlert' => "true",
+                'cele_jmeno' => "Novák",
+                'umisteni' => "Čítárna",
+                'telefon' => "723 027 278"
+            );
+            $jsonData[$idx++] = $temp;
             //            }
-            
-            //$view = new JsonModel($userOnline);
-            $view = new JsonModel($jsonData);
+            $view = new JsonModel($userOnline);
+            //$view = new JsonModel($jsonData);
             $view->setTerminal(true);
         } else {
             $view = new ViewModel();
         }
-        return $view;        
-        
-    }    
-    
-    
+        return $view;
+    }
 
 }

@@ -118,6 +118,7 @@ return [
     ],
     'service_manager' => [
         'factories' => [
+            Service\AlertManager::class => Service\Factory\AlertManagerFactory::class,
             Service\SettingManager::class => Service\Factory\SettingManagerFactory::class,
             Service\OnlineManager::class => Service\Factory\OnlineManagerFactory::class,
             Service\NavManager::class => Service\Factory\NavManagerFactory::class,
