@@ -19,6 +19,7 @@ use Zend\Mail;
 //use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp as SmtpTransport;
 use Zend\Mail\Transport\SmtpOptions;
+use Application\Service\CSendSMS;
 
 class IndexController extends AbstractActionController {
 
@@ -191,36 +192,67 @@ class IndexController extends AbstractActionController {
 
         /* @var $alertManager \Application\Service\AlertManager */
         $alertManager = $this->alertManager;
-        $alertManager->addNewAlert($id_user);
+        //$alertManager->addNewAlert($id_user);
 
+        /* @var $userRepository \Application\Repository\UserRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
 
-        $mail = new Mail\Message();
-        $mail->setBody('This is the text of the email.');
-        $mail->setFrom('mikac@knihovnakv.cz', "Miki");
-        $mail->addTo('mikac@knihovnakv.cz', "Miki");
-        $mail->setSubject('TestSubject - PANIKA!');
+        /* @var $user \Application\Entity\User */
+        $userOnlineSms = $userRepository->NajdiOnlineProSMSUsers();
 
-        //$transport = new Mail\Transport\Sendmail();
-        //$transport->send($mail);
+        /* @var $settingRepository \Application\Repository\SettingRepository */
+        $settingRepository = $this->entityManager->getRepository(Setting::class);
 
-        // Setup SMTP transport using LOGIN authentication
-        $transport = new SmtpTransport();
-        $options = new SmtpOptions([
-            'name' => 'mail.knihovnakv.cz',
-            'host' => '192.168.1.203',
-            'connection_class' => 'login',
-            'connection_config' => [
-                'username' => 'mikac',
-                'password' => 'Hellmaker007',
-            ],
-        ]);
-        $transport->setOptions($options);
-        $transport->send($mail);
+        /* @var $setting \Application\Entity\Setting */
+        $setting = $settingRepository->NajdiNastaveniDleIdUser($user->getId());
 
+/*        foreach ($userOnlineSms as $userArray) {
 
+            //echo $userArray;
+            
+            $mail = new Mail\Message();
+            $mail->setBody('This is the text of the email.');
+            $mail->setFrom('mikac@knihovnakv.cz', "Miki");
+            $mail->addTo('mikac@knihovnakv.cz', "Miki");
+            $mail->addTo($userArray->email, $userArray->cele_jmeno);
+            $mail->setSubject('PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . 'telefon:' . $setting->getTelefon());
 
+            //$transport = new Mail\Transport\Sendmail();
+            //$transport->send($mail);
+            // Setup SMTP transport using LOGIN authentication
+            $transport = new SmtpTransport();
+            $options = new SmtpOptions([
+                'name' => 'mail.knihovnakv.cz',
+                'host' => '192.168.1.203',
+                'connection_class' => 'login',
+                'connection_config' => [
+                    'username' => 'mikac',
+                    'password' => 'Hellmaker007',
+                ],
+            ]);
+            $transport->setOptions($options);
+            $transport->send($mail);
+
+            $sms = new CSendSMS();
+            $status = $sms->Connect('knihovnakv', 'smsheslo256', '615dd9914f1570362f058e03036bcfda');
+            $sms->SendSMS('420' . $userArray->telefon, 'PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . 'telefon:' . $setting->getTelefon(), 1, 'Panika KKKV');
+
+            $sms->Disconnect();
+        }
+*/
 
         return $this->redirect()->toRoute('home');
+    }
+
+    /**
+     * The "ALERT" action displays the info about currently logged in user.
+     */
+    public function aboutAction() {
+
+
+        $view = new ViewModel();
+
+        return $view;
     }
 
     /**
@@ -246,17 +278,12 @@ class IndexController extends AbstractActionController {
             return;
         }
 
-
-
         /* @var $user \User\Entity\User */
         $user = $this->currentUser();
         $id_user = $user->getId();
 
-
-
         /* @var $alertManager \Application\Service\AlertManager */
         $alertManager = $this->alertManager;
-        //$alertManager->addNewAlert($id_user);
         $alertManager->closeAlert($id_user, $id);
 
         return $this->redirect()->toRoute('home');

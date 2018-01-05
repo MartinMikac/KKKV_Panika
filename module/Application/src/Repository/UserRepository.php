@@ -37,6 +37,29 @@ class UserRepository extends EntityRepository {
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
+    
+
+    /**
+     * Retrieves all users with last online is no more then 5 minutes
+     * @return Query
+     */
+    public function NajdiOnlineProSMSUsers() {
+        $entityManager = $this->getEntityManager();
+
+
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        $queryBuilder->select('p', 't')
+                ->from(Setting::class, 'p')
+                ->join('p.user', 't')
+                ->where('t.id = p.user_id')
+                ->where('t.last_online > :datum')
+                ->setParameter(':datum', new \DateTime('-45 minute'), \Doctrine\DBAL\Types\Type::DATETIME);
+
+        $navrat = $queryBuilder->getQuery()->getResult(Query::HYDRATE_OBJECT);
+
+        return $navrat;
+    }    
 
     /**
      * Retrieves all users with last online is no more then 5 minutes
