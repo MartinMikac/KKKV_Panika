@@ -6,13 +6,13 @@ namespace Application\Service;
 //use Zend\ServiceManager\ServiceManagerAwareInterface;
 //use Application\Entity\Admin;
 //use Zend\Filter\StaticFilter;
-use User\Entity\User;
-use Application\Entity\Setting;
+//use User\Entity\User;
+use Application\Entity\UserSmsList;
 
 /**
- * The AdminManager service is responsible for save settings, updating existing
+ * The UserSmsListManager service is responsible for save settings, updating existing
  */
-class SettingManager {
+class UserSmsListManager {
 
     /**
      * Entity manager.

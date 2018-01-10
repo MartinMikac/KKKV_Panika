@@ -1,14 +1,23 @@
 
 
 
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('smsUsers', ['action'=>'add']); ?>">
+    <span class="glyphicon glyphicon-plus"></span> New User
+</a>
+</p>
+
+
+
 <table class="table" id="uzivatele_online_table">
     <thead class="thead-inverse">
         <tr>
             <th>#</th>
             <th>Jméno</th>
             <th>Oddělení</th>
+            <th>Email</th>
             <th>Telefon</th>
-            <th>Čas kontroly</th>
         </tr>
     </thead>
 
@@ -16,7 +25,7 @@
 
         <?php $pocitadlo = 1; ?>
 
-
+        <?php /* @var $online \Application\Entity\UserSmsList */?>
         <?php foreach ($onlines as $online): ?>
 
 
@@ -27,13 +36,14 @@
                     <?= $this->escapeHtml($online->getCeleJmeno()); ?>        
                 </td>
                 <td>
-                    <?= $this->escapeHtml($online->getUmisteni()); ?>        
+                    <?= $this->escapeHtml($online->getOddeleni()); ?>        
+                </td>
+                </td>
+                <td>
+                    <?= $this->escapeHtml($online->getEmail()); ?>        
                 </td>
                 <td>
                     <?= $this->escapeHtml($online->getTelefon()); ?>        
-                </td>
-                <td>
-                    <?= $this->escapeHtml($online->getUser()->getLastOnline()->format("d.m.Y H:i:s")) ?>
                 </td>
             </tr>
             <?php $pocitadlo++; ?>   

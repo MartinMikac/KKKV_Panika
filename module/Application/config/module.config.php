@@ -102,9 +102,13 @@ return [
                 ],
             ],
             'smsUsers' => [
-                'type' => Literal::class,
+                'type' => Segment::class,
                 'options' => [
-                    'route' => '/smsUsers',
+                    'route' => '/smsUsers[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*',
+                    ],
                     'defaults' => [
                         'controller' => Controller\SettingController::class,
                         'action' => 'smsUsers',
@@ -144,6 +148,7 @@ return [
         'factories' => [
             Service\AlertManager::class => Service\Factory\AlertManagerFactory::class,
             Service\SettingManager::class => Service\Factory\SettingManagerFactory::class,
+            Service\UserSmsListManager::class => Service\Factory\UserSmsListManagerFactory::class,
             Service\OnlineManager::class => Service\Factory\OnlineManagerFactory::class,
             Service\NavManager::class => Service\Factory\NavManagerFactory::class,
             Service\RbacAssertionManager::class => Service\Factory\RbacAssertionManagerFactory::class,
@@ -164,7 +169,7 @@ return [
         'controllers' => [
             Controller\IndexController::class => [
                 // Allow anyone to visit "index" and "about" actions
-                ['actions' => ['index', 'about','ajax'], 'allow' => '*'],
+                ['actions' => ['index', 'about', 'ajax'], 'allow' => '*'],
                 // Allow authorized users to visit "settings" action
                 ['actions' => ['index', 'about', 'ajax', 'checkAlert', 'alert', 'settings', 'alertOver', 'panika'], 'allow' => '@']
             ],

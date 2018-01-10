@@ -12,6 +12,7 @@ use Zend\View\Model\ViewModel;
 use Application\Form\NastaveniForm;
 use Application\Entity\Setting;
 use Application\Entity\User;
+use Application\Entity\UserSmsList;
 
 /**
  * Description of NastaveniController
@@ -31,13 +32,20 @@ class SettingController extends AbstractActionController {
      * @var $settingManager \Application\Service\SettingManager
      */
     private $settingManager;
+    
+    /**
+     * UserSmsList manager.
+     * @var $userSmsListManager \Application\Service\UserSmsListManager
+     */
+    private $userSmsListManager;    
 
     /**
      * Constructor. Its purpose is to inject dependencies into the controller.
      */
-    public function __construct($entityManager, $settingManager) {
+    public function __construct($entityManager, $settingManager, $userSmsListManager) {
         $this->entityManager = $entityManager;
         $this->settingManager = $settingManager;
+        $this->userSmsListManager = $userSmsListManager;
 
         //$settingManager->
     }
@@ -128,10 +136,10 @@ class SettingController extends AbstractActionController {
                 // Redirect the user to "admin" page.
                 return $this->redirect()->toRoute('nastaveni', ['action' => 'index']);
             } else {
-                /*echo "NEVALIDNI";
-                print_r($form->getMessages()); //error messages
-                print_r($form->getErrors()); //error codes
-                print_r($form->getErrorMessages()); //any custom error messages
+                /* echo "NEVALIDNI";
+                  print_r($form->getMessages()); //error messages
+                  print_r($form->getErrors()); //error codes
+                  print_r($form->getErrorMessages()); //any custom error messages
                  */
             }
         } else {
@@ -153,6 +161,16 @@ class SettingController extends AbstractActionController {
             'form' => $form,
             'admin' => $setting
         ]);
+    }
+
+    public function smsUsersAction() {
+        
+        $userSmsList = $this->entityManager->getRepository(UserSmsList::class)->findAll();
+        
+        return new ViewModel([
+            'onlines' => $userSmsList
+        ]);
+        
     }
 
 }
