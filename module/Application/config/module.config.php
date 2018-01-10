@@ -101,6 +101,16 @@ return [
                     ],
                 ],
             ],
+            'smsUsers' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/smsUsers',
+                    'defaults' => [
+                        'controller' => Controller\SettingController::class,
+                        'action' => 'smsUsers',
+                    ],
+                ],
+            ],
             'application' => [
                 'type' => Segment::class,
                 'options' => [

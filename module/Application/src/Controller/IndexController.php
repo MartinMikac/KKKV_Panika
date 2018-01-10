@@ -192,7 +192,7 @@ class IndexController extends AbstractActionController {
 
         /* @var $alertManager \Application\Service\AlertManager */
         $alertManager = $this->alertManager;
-        //$alertManager->addNewAlert($id_user);
+        $alertManager->addNewAlert($id_user);
 
         /* @var $userRepository \Application\Repository\UserRepository */
         $userRepository = $this->entityManager->getRepository(User::class);
@@ -206,15 +206,15 @@ class IndexController extends AbstractActionController {
         /* @var $setting \Application\Entity\Setting */
         $setting = $settingRepository->NajdiNastaveniDleIdUser($user->getId());
 
-/*        foreach ($userOnlineSms as $userArray) {
+        /* @var $userArray \Application\Entity\Setting */
+        foreach ($userOnlineSms as $userArray) {
 
             //echo $userArray;
             
             $mail = new Mail\Message();
-            $mail->setBody('This is the text of the email.');
+            $mail->setBody('PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . 'telefon:' . $setting->getTelefon());
             $mail->setFrom('mikac@knihovnakv.cz', "Miki");
             $mail->addTo('mikac@knihovnakv.cz', "Miki");
-            $mail->addTo($userArray->email, $userArray->cele_jmeno);
             $mail->setSubject('PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . 'telefon:' . $setting->getTelefon());
 
             //$transport = new Mail\Transport\Sendmail();
@@ -231,15 +231,15 @@ class IndexController extends AbstractActionController {
                 ],
             ]);
             $transport->setOptions($options);
-            $transport->send($mail);
+            //$transport->send($mail);
 
             $sms = new CSendSMS();
-            $status = $sms->Connect('knihovnakv', 'smsheslo256', '615dd9914f1570362f058e03036bcfda');
-            $sms->SendSMS('420' . $userArray->telefon, 'PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . 'telefon:' . $setting->getTelefon(), 1, 'Panika KKKV');
+            $sms->Connect('knihovnakv', 'smsheslo256', '615dd9914f1570362f058e03036bcfda');
+            $sms->SendSMS('420' . $userArray->getTelefon(), 'PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . ' telefon:' . $setting->getTelefon(), 1, 'Panika KKKV');
 
             $sms->Disconnect();
         }
-*/
+
 
         return $this->redirect()->toRoute('home');
     }

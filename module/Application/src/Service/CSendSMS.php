@@ -192,101 +192,18 @@ namespace Application\Service;
                            "User-Agent: Mozilla/4.72 [en] (Win98; I)\r\n\r\n".$post_query);
 
         //zpracovani navratove hodnoty
-        $disconnect=false;
+        /*$disconnect=false;
         while(!feof($this->link)){
   	      $res=fgets($this->link,4096);
-          if(eregi("Connection: Close\r\n",$res,$regs))$disconnect=true;  //server uzavrel spojeni
-    	    if(eregi("result0=(.*)\r\n",$res,$regs))$result=$regs[1];
-        }
-        if($disconnect)$this->Disconnect();
-
+          if(preg_match("Connection: Close\r\n",$res,$regs))$disconnect=true;  //server uzavrel spojeni
+    	    if(preg_match("result0=(.*)\r\n",$res,$regs))$result=$regs[1];
+        }*/
+        //if($disconnect)$this->Disconnect();
 			} else $result=1; //pri DEBUG modu vracet vzdy 'ODESLANO OK'
-
+      $this->Disconnect();
       return $result;
 
     }	//end of SendSMS()
-
-    //Okamzite odesle vsechny SMS zarazene v lokalni fronte
-    function SendAllSMS(){
-
-	    if(!$this->link)return 15;
-			if($this->queue_len==0)return 1;
-
-      if($this->opt_https)$URL="https://smsmidlet.com/post_new/";  //HTTPS
-      else $URL="/post_new/";                                      //HTTP
-
-			$post_query='';
-      $md5=md5("{$this->textpassw}{$this->username}");
-      $get_query="username={$this->username}&password={$this->hashpassw}&hash=$md5&smscount={$this->queue_len}&show_SMSID=1";
-			for($i=0;$i<$this->queue_len;$i++){
-
-        $sms				= $this->queue[$i];
-      	$number			=	$sms['number'];	//osetrit format cisla
-        $sender     = urlencode($sms['sender']);
-        if($sms['display']<3) $text       = urlencode(substr($sms['text'],0,160));
-		else $text =  urlencode($sms['text']);
-        $display    = ($sms['display']>0)&&($sms['display']<20)?$sms['display']:1;
-		//$display  = $sms['display'];
-        $post_query.= ($post_query?'&':'')."text$i=$text&number$i=$number&smstype$i=$display&sender$i=$sender";
-
-      }
-
-      $results=array();	//pole pro naplneni navratovych hodnot odesilani
-      $newqueue=array();//pokud nastaven flag HOLDFAIL, ulozim sem neodeslane SMS
-      $newqueue_len=0;	//delka pole neodeslanych SMS
-
-      if(!$this->opt_debug){
-
-      	//odeslani SMS na server
-	  	  fwrite($this->link,"POST {$URL}?{$get_query} HTTP/1.0\r\n".
-  	  	                   "Connection: Close\r\n".
-    	                     "Host: smsmidlet.com\r\n".
-      	                   "Content-Type: application/x-www-form-urlencoded\r\n".
-        	                 "Content-Length: ".strlen($post_query)."\r\n".
-         		               "Cache-Control: no-cache\r\n".
-           		             "User-Agent: Mozilla/4.72 [en] (Win98; I)\r\n\r\n".$post_query);
-
-				//zpracovavani navratovych hodnot
-        $error=false;	//predpokladam ze probehne uspesne
-        $disconnect=false;	//jestli po prenosu uzavrit spojeni
-	      while(!feof($this->link)){	//pro kazdy radek navratu ze serveru
-			   	$res=fgets($this->link,4096);
-          echo $res;
-          if(preg_match("Connection: Close\r\n",$res,$regs))$disconnect=true;  //server uzavrel spojeni
-   	  	  if(preg_match("result(.*)=(.*)\r\n",$res,$regs)){	//pokud souhlasi syntax radku
-          	$results[$regs[1]]=$regs[2];//do pole resultu vratim stav odeslani
-            if(($this->opt_print)&&(isset($this->queue[$regs[1]])))
-            	echo "SendSMS(): {$regs[2]} ({$this->queue[$regs[1]]['number']}:".
-            	     "{$this->queue[$regs[1]]['display']}:{$this->queue[$regs[1]]['sender']}:".
-                   "{$this->queue[$regs[1]]['text']});<br />\r\n";
-            if(!preg_match('^[12]$',$results[$regs[1]])){	//pokud neuspesne odeslani
-            	if(($this->opt_holdfail)&&(isset($this->queue[$regs[1]]))){	//a nastaven flag uchovavani neodeslanych SMS
-								$newqueue[]=$this->queue[$regs[1]];	//pridam tuto SMS do nove fronty
-                $newqueue_len++;
-              }
-            	$error=true;	//nastavim hlavni result fce
-            }
-          }
-	    	}
-        if($disconnect)$this->Disconnect();
-      } else {	//DEBUG simulace odeslani SMS
-        $error=false;  //behem fingovaneho odesilani se nestane zadna chyba
-      	for($i=0;$i<$this->queue_len;$i++){
-				  if($this->opt_print)echo "SendSMS(): 1 ({$this->queue[$i]['number']}:{$this->queue[$i]['display']}:".
-          												 "{$this->queue[$i]['sender']}:{$this->queue[$i]['text']});<br />\r\n";
-          $results[$i]=1;	//v DEBUG modu vsechny SMS odeslany uspesne
-        }
-      }
-
-      //pokud server pro nejakou sms nevratil zadny vysledek, nastavim chybu komunikace
-      for($i=0;$i<$this->queue_len;$i++)if(!isset($results[$i]))$results[$i]=15;
-
-      $this->queue=$newqueue;	//nastavim novou frontu
-      $this->queue_len=$newqueue_len;
-      $this->results=$results;	//ulozim do tridy resulty odeslanych SMS
-			return !$error;
-
-    } //end of SendAllSMS();
 
   }	//end of class
 

@@ -94,6 +94,15 @@ class NavManager
                         ];
             }
             
+            
+            if ($this->rbacManager->isGranted(null, 'permission.smsUsers')) {
+                $adminDropdownItems[] = [
+                            'id' => 'smsUsers',
+                            'label' => 'SMS List uživatelů',
+                            'link' => $url('smsUsers')
+                        ];
+            }
+            
             if (count($adminDropdownItems)!=0) {
                 $items[] = [
                     'id' => 'admin',

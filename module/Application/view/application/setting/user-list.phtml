@@ -1,0 +1,43 @@
+
+
+
+<table class="table" id="uzivatele_online_table">
+    <thead class="thead-inverse">
+        <tr>
+            <th>#</th>
+            <th>Jméno</th>
+            <th>Oddělení</th>
+            <th>Telefon</th>
+            <th>Čas kontroly</th>
+        </tr>
+    </thead>
+
+    <tbody id="uzivatele_online">
+
+        <?php $pocitadlo = 1; ?>
+
+
+        <?php foreach ($onlines as $online): ?>
+
+
+            <tr>
+                <th scope="row"><?= $pocitadlo ?>   </th>
+
+                <td>
+                    <?= $this->escapeHtml($online->getCeleJmeno()); ?>        
+                </td>
+                <td>
+                    <?= $this->escapeHtml($online->getUmisteni()); ?>        
+                </td>
+                <td>
+                    <?= $this->escapeHtml($online->getTelefon()); ?>        
+                </td>
+                <td>
+                    <?= $this->escapeHtml($online->getUser()->getLastOnline()->format("d.m.Y H:i:s")) ?>
+                </td>
+            </tr>
+            <?php $pocitadlo++; ?>   
+        <?php endforeach; ?>        
+
+    </tbody>
+</table>
