@@ -1,0 +1,15 @@
+  stáhnout selenium-server-standalone-3.8.1.jar (poslední verzi)
+  stáhnout poslední chrome driver - https://sites.google.com/a/chromium.org/chromedriver/home
+  
+  přidat cestu pro ChromeDriver do promněnného prostředí PATH -> např. C:\__GIT_SOURCE_\Selenium_3_server\chromedriver.exe 
+  
+  
+Pustit Selenium server -> 
+PS C:\__GIT_SOURCE_\Selenium_3_server> java -jar .\selenium-server-standalone-3.8.1.jar
+
+
+pustit samotné testování -> .\vendor\bin\codecept run
+
+
+
+  
