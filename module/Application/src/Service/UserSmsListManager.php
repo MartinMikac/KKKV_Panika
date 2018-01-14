@@ -18,6 +18,7 @@ class UserSmsListManager {
      * Entity manager.
      * @var $entityManager Doctrine\ORM\EntityManager;
      */
+    /* @var $entityManager Doctrine\ORM\EntityManager; */
     private $entityManager;
 
     /**
@@ -28,70 +29,54 @@ class UserSmsListManager {
     }
 
     /**
-     * This method adds a new post.
-     * @var $user User\Entity\User
+     * This method adds a new smsUser
+     * 
      */
-    public function createDefaultSetting($user) {
+    public function createSmsUserSetting($data) {
+        $smsUser = new UserSmsList();
 
-          /* @var $userData \User\Entity\User */
-        $userData = $user;
-        
-        $setting = new Setting();
-        $setting->setUserId($userData->getId());
-        $setting->setCeleJmeno("Nenastaveno");
-        $setting->setTelefon("Nenastaveno");
-        $setting->setUmisteni("Nenastaveno");
-        $setting->setUser($user);
-        $setting->setEmail($userData->getEmail());
-        
-        $aktualni_datum = new \DateTime("now");
-        $aktualni_datum->format('Y-m-d H:i:s');
-        
-        $setting->setLastOnline($aktualni_datum);
-        
-        
-        $this->entityManager->persist($setting);
+        $smsUser->setCeleJmeno($data['cele_jmeno']);
+        $smsUser->setTelefon($data['telefon']);
+        $smsUser->setOddeleni($data['oddeleni']);
+        $smsUser->setEmail($data['email']);
+
+
+        $this->entityManager->persist($smsUser);
         // Apply changes to database.
         $this->entityManager->flush();
     }
+    
 
     /**
-     * This method allows to update data of a single post.
+     * This method adds a new smsUser
+     * 
      */
-    public function updateAdmin(\Application\Entity\Setting $setting, $data) {
+    public function updateSmsUser($id, $data) {
+        
+        /* @var $userSms \Application\Entity\UserSmsList */
+        $userSms = $this->entityManager->getRepository(UserSmsList::class)->findOneById($id);
+        
+        $userSms->setCeleJmeno($data['cele_jmeno']);
+        $userSms->setTelefon($data['telefon']);
+        $userSms->setOddeleni($data['oddeleni']);
+        $userSms->setEmail($data['email']);
 
 
-//        echo $data['id'];
+        $this->entityManager->persist($userSms);
+        // Apply changes to database.
+        $this->entityManager->flush();
+    }    
+
+    /**
+     * This method adds a new smsUser
+     * 
+     */
+    public function deleteSmsUser($id) {
 
         /* @var $user \User\Entity\User */
-        $user = $this->entityManager->getRepository(User::class)->findOneById($data['id']);
+        $userSms = $this->entityManager->getRepository(UserSmsList::class)->findOneById($id);
 
-        $setting->setCeleJmeno($data['cele_jmeno']);
-        $setting->setUmisteni($data['umisteni']);
-        //$setting->setEmail($data['email']);
-        $setting->setTelefon($data['telefon']);
-        
-        
-        $aktualni_datum = new \DateTime("now");
-        $aktualni_datum->format('Y-m-d H:i:s');
-        
-        $setting->setLastOnline($aktualni_datum);
-        
-
-
-
-
-
-        if (strlen($data['heslo']) > 1) {
-
-            $bcrypt = new Bcrypt();
-            $passwordHash = $bcrypt->create($data['heslo']);
-
-            $setting->setHeslo($passwordHash);
-            //$user->setHeslo(password_hash($data['heslo'], PASSWORD_DEFAULT));
-            $user->setPassword($passwordHash);
-            $this->entityManager->persist($user);
-        }
+        $this->entityManager->remove($userSms);
 
         $this->entityManager->flush();
     }

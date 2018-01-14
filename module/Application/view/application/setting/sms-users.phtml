@@ -2,10 +2,10 @@
 
 
 <p>
-<a class="btn btn-default" href="
-    <?= $this->url('smsUsers', ['action'=>'add']); ?>">
-    <span class="glyphicon glyphicon-plus"></span> New User
-</a>
+    <a class="btn btn-default" href="
+       <?= $this->url('smsUsers', ['action' => 'pridejSmsUser']); ?>">
+        <span class="glyphicon glyphicon-plus"></span> Přidat nového uživatele
+    </a>
 </p>
 
 
@@ -25,7 +25,7 @@
 
         <?php $pocitadlo = 1; ?>
 
-        <?php /* @var $online \Application\Entity\UserSmsList */?>
+        <?php /* @var $online \Application\Entity\UserSmsList */ ?>
         <?php foreach ($onlines as $online): ?>
 
 
@@ -45,6 +45,16 @@
                 <td>
                     <?= $this->escapeHtml($online->getTelefon()); ?>        
                 </td>
+                <td>
+                    </nobr>
+                    <a class="btn btn-info" href="<?= $this->url('smsUsers', ['action' => 'upravSmsUser', 'id' => $online->getId()]); ?>">
+                        <span class="glyphicon glyphicon-pencil" ></span> Edit
+                    </a>
+                    <a class="btn btn-danger" href="<?= $this->url('smsUsers', ['action' => 'smazSmsUser', 'id' => $online->getId()]); ?>">
+                        <span class="glyphicon glyphicon-remove"></span> Delete
+                    </a>
+                    </nobr>
+                </td>    
             </tr>
             <?php $pocitadlo++; ?>   
         <?php endforeach; ?>        

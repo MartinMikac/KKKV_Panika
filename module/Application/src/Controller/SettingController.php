@@ -10,6 +10,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Form\NastaveniForm;
+use Application\Form\SmsUserForm;
 use Application\Entity\Setting;
 use Application\Entity\User;
 use Application\Entity\UserSmsList;
@@ -32,12 +33,12 @@ class SettingController extends AbstractActionController {
      * @var $settingManager \Application\Service\SettingManager
      */
     private $settingManager;
-    
+
     /**
      * UserSmsList manager.
      * @var $userSmsListManager \Application\Service\UserSmsListManager
      */
-    private $userSmsListManager;    
+    private $userSmsListManager;
 
     /**
      * Constructor. Its purpose is to inject dependencies into the controller.
@@ -129,8 +130,6 @@ class SettingController extends AbstractActionController {
                 $data = $form->getData();
                 $data['id'] = $setting->getId();
                 // Use Online manager service update logged user.
-                //$this->postManager->updatePost($post, $data);
-                //$this->adminManager->updateAdmin($setting, $data);
                 $this->settingManager->updateAdmin($setting, $data);
 
                 // Redirect the user to "admin" page.
@@ -164,11 +163,106 @@ class SettingController extends AbstractActionController {
     }
 
     public function smsUsersAction() {
-        
+
         $userSmsList = $this->entityManager->getRepository(UserSmsList::class)->findAll();
-        
+
         return new ViewModel([
             'onlines' => $userSmsList
+        ]);
+    }
+
+    public function pridejSmsUserAction() {
+
+        $form = new SmsUserForm();
+
+        // Get admin ID.
+        $userSmsId = $this->params()->fromRoute('id');
+
+
+        if ($this->getRequest()->isPost()) {
+            // Get POST data.
+            $data = $this->params()->fromPost();
+
+            $form->setData($data);
+            if ($form->isValid()) {
+
+                // Get validated form data.
+                $data = $form->getData();
+
+                /* @var $userSmsListManager \Application\Service\UserSmsListManager */
+                $userSmsListManager = $this->userSmsListManager;
+                $userSmsListManager->createSmsUserSetting($data);
+
+                return $this->redirect()->toRoute('smsUsers');
+            }
+
+
+
+
+            //return $this->redirect()->toRoute('smsUsers');
+        }
+
+        return new ViewModel([
+            'form' => $form
+        ]);
+
+        //return $this->redirect()->toRoute('smsUsers');
+    }
+
+    public function smazSmsUserAction() {
+
+        // Get admin ID.
+        $userSmsId = $this->params()->fromRoute('id');
+
+        /* @var $userSmsListManager \Application\Service\UserSmsListManager */
+        $userSmsListManager = $this->userSmsListManager;
+        $userSmsListManager->deleteSmsUser($userSmsId);
+
+        return $this->redirect()->toRoute('smsUsers');
+    }
+
+    public function upravSmsUserAction() {
+
+        $form = new SmsUserForm();
+        // Get admin ID.
+        $userSmsId = $this->params()->fromRoute('id');
+
+        /* @var $userSms \Application\Entity\UserSmsList */
+        $userSms = $this->entityManager->getRepository(UserSmsList::class)->findOneById($userSmsId);
+
+        if ($this->getRequest()->isPost()) {
+            // Get POST data.
+            $data = $this->params()->fromPost();
+
+            $form->setData($data);
+            if ($form->isValid()) {
+
+                // Get validated form data.
+                $data = $form->getData();
+
+                /* @var $userSmsListManager \Application\Service\UserSmsListManager */
+                $userSmsListManager = $this->userSmsListManager;
+                $userSmsListManager->updateSmsUser($userSmsId, $data);
+                //$userSmsListManager->createSmsUserSetting($data);
+
+                return $this->redirect()->toRoute('smsUsers');
+            }
+        } else {
+            $data = [
+                'cele_jmeno' => $userSms->getCeleJmeno(),
+                'email' => $userSms->getEmail(),
+                'oddeleni' => $userSms->getOddeleni(),
+                'telefon' => $userSms->getTelefon()
+            ];
+
+            $form->setData($data);
+        }
+
+
+
+        // Render the view template.
+        return new ViewModel([
+            'form' => $form
         ]);
         
     }
