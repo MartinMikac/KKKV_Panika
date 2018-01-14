@@ -166,6 +166,12 @@ class SettingController extends AbstractActionController {
 
         $userSmsList = $this->entityManager->getRepository(UserSmsList::class)->findAll();
 
+        $this->flashMessenger()->addSuccessMessage('Un message de réussite');
+        $this->flashMessenger()->addErrorMessage('Erreur avec le système.');
+        $this->flashMessenger()->addInfoMessage('Info message');
+        $this->flashMessenger()->addWarningMessage('Message d\'avertissement.');
+        
+         
         return new ViewModel([
             'onlines' => $userSmsList
         ]);
@@ -244,6 +250,8 @@ class SettingController extends AbstractActionController {
                 $userSmsListManager = $this->userSmsListManager;
                 $userSmsListManager->updateSmsUser($userSmsId, $data);
                 //$userSmsListManager->createSmsUserSetting($data);
+                
+                $this->flashMessenger()->addSuccessMessage('změna uložena');
 
                 return $this->redirect()->toRoute('smsUsers');
             }
