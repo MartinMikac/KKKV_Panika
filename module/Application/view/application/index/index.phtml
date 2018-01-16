@@ -7,8 +7,8 @@
 
         getData();
         getAlert();
-        //setInterval(getData, 5000);
-        //setInterval(getAlert, 10000);
+        setInterval(getData, 5000);
+        setInterval(getAlert, 10000);
         var isSendedAlert = false;
         function getAlert()
         {
@@ -185,6 +185,11 @@
         };
  //   });
 </script>
+
+<?= $this->flashMessenger()->render('error', ['alert', 'alert-warning']); ?>
+<?= $this->flashMessenger()->render('success', ['alert', 'alert-success']); ?>
+<?= $this->flashMessenger()->render('info', ['alert', 'alert-info']); ?>
+
 
 <div class="row align-items-center col-md-4" style="" >
     <form class="col-md" name="alert" action="<?= $this->url('alert') ?>" method="POST">

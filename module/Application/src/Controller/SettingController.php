@@ -131,9 +131,9 @@ class SettingController extends AbstractActionController {
                 $data['id'] = $setting->getId();
                 // Use Online manager service update logged user.
                 $this->settingManager->updateAdmin($setting, $data);
-
+                $this->flashMessenger()->addSuccessMessage('Změny byly úspěšně uloženy');
                 // Redirect the user to "admin" page.
-                return $this->redirect()->toRoute('nastaveni', ['action' => 'index']);
+                return $this->redirect()->toRoute('home');
             } else {
                 /* echo "NEVALIDNI";
                   print_r($form->getMessages()); //error messages
@@ -166,10 +166,10 @@ class SettingController extends AbstractActionController {
 
         $userSmsList = $this->entityManager->getRepository(UserSmsList::class)->findAll();
 
-        $this->flashMessenger()->addSuccessMessage('Un message de réussite');
-        $this->flashMessenger()->addErrorMessage('Erreur avec le système.');
-        $this->flashMessenger()->addInfoMessage('Info message');
-        $this->flashMessenger()->addWarningMessage('Message d\'avertissement.');
+        //$this->flashMessenger()->addSuccessMessage('Změny byly úspěšně uloženy');
+        //$this->flashMessenger()->addErrorMessage('Erreur avec le système.');
+        //$this->flashMessenger()->addInfoMessage('Info message');
+        //$this->flashMessenger()->addWarningMessage('Message d\'avertissement.');
         
          
         return new ViewModel([
