@@ -128,7 +128,7 @@ class SettingController extends AbstractActionController {
 
                 // Get validated form data.
                 $data = $form->getData();
-                $data['id'] = $setting->getId();
+                $data['id'] = $user->getId();
                 // Use Online manager service update logged user.
                 $this->settingManager->updateAdmin($setting, $data);
                 $this->flashMessenger()->addSuccessMessage('Změny byly úspěšně uloženy');

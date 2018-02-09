@@ -4,27 +4,28 @@ $this->headTitle('Thank You');
 
 <div class="row">
 <div class="col-md-offset-4 col-md-5">
-<h1>Reset Password</h1>
+<h1>Reset hesla</h1>
 
 <?php if ($id=='sent'): ?>
 <p>
-    A password reset link has been sent to your email address.
+    Link na reset hesla Vám byl zaslán na e-mail
 </p>
 <?php elseif ($id=='invalid-email'): ?>
 <p>
-    There is no user with such an email.
+    Není tu žádný uživatel s tímto e-mailem
 </p>
 <?php elseif ($id=='set'): ?>
 <p>
-    Your new password has been set successfully.
+    Vaše heslo bylo úspěšně nastaveno
 </p>
 <p>
-    Return to <a href="<?= $this->url('login'); ?>">login page</a>.
+    Return to <a href="<?= $this->url('login'); ?>">Přihlašovací stránka</a>.
 </p>
 <?php elseif ($id=='failed'): ?>
 
-    Invalid reset key or it may have expired. Please return 
-    <a href="<?= $this->url('reset-password') ?>">here</a> and try reset your password again.
+Španý validační klíč nebo klíč vypršel. prosím opakujte    
+ 
+    <a href="<?= $this->url('reset-password') ?>">ZDE</a> a pokuste se vyresetovat heslo ještě jednou
 </p>
 <?php endif; ?>
 </div>

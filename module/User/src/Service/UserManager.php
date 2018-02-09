@@ -5,6 +5,12 @@ use User\Entity\User;
 use User\Entity\Role;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
+use Zend\Mail\Message;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Mime;
+use Zend\Mime\Part as MimePart;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
 
 /**
  * This service is responsible for adding/editing users
@@ -217,14 +223,69 @@ class UserManager
         $subject = 'Password Reset';
             
         $httpHost = isset($_SERVER['HTTP_HOST'])?$_SERVER['HTTP_HOST']:'localhost';
-        $passwordResetUrl = 'http://' . $httpHost . '/set-password?token=' . $token;
+        $passwordResetUrl = 'http://' . $httpHost . '/users/set-password?token=' . $token;
         
-        $body = 'Please follow the link below to reset your password:\n';
-        $body .= "$passwordResetUrl\n";
-        $body .= "If you haven't asked to reset your password, please ignore this message.\n";
+        $bodyMail = '<html><body>';
+        $bodyMail = 'Prosím, klikněte na tento link pro reset hesla: </br>';
+        $bodyMail .= "<a href=".$passwordResetUrl.">".$passwordResetUrl."</a>  </br>";
+        $bodyMail .= "Pokud jste nechtěli heslo resetovat, pak tuto zprávu ignorujte. </br>";
+        $bodyMail .= "</body></html>";
         
         // Send email to user.
-        mail($user->getEmail(), $subject, $body);
+        //mail($user->getEmail(), $subject, $body);
+        
+        
+        
+            $html = new MimePart($bodyMail);
+            $html->type = Mime::TYPE_HTML;
+            $html->charset = 'utf-8';
+            $html->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
+
+            $body = new MimeMessage();
+            $body->setParts([$html]);
+
+            $message = new Message();
+            $message->setBody($body);
+            $message->setSubject("Nove heslo pro - panika.knihovnakv.cz");
+            $message->setFrom('mikac@knihovnakv.cz', "Miki");
+            $message->addTo($user->getEmail());
+            
+            $transport = new SmtpTransport();
+            $options = new SmtpOptions([
+                'name' => 'mail.knihovnakv.cz',
+                'host' => '192.168.1.203'
+            ]);
+            $transport->setOptions($options);            
+
+            //$contentTypeHeader = $message->getHeaders()->get('Content-Type');
+            //$contentTypeHeader->setType('multipart/related');        
+        
+            $transport->send($message);
+        
+        /*
+                $mail = new Mail\Message();
+                //$mail->setBody($body);
+                $mail->setFrom('mikac@knihovnakv.cz', "Miki");
+                $mail->addTo($user->getEmail());
+                $mail->setSubject('Vyresetovaní hesla - panika.knihovnakv.cz');
+
+                $bodyPart = new \Zend\Mime\Message();
+                $bodyMessage = new \Zend\Mime\Part($body);
+                $bodyMessage->type = 'text/html';
+                $bodyPart->setParts(array($bodyMessage));
+
+                $mail->setBody($bodyPart);
+                $mail->setEncoding('UTF-8');
+                
+                $transport = new SmtpTransport();
+                $options = new SmtpOptions([
+                    'name' => 'mail.knihovnakv.cz',
+                    'host' => '192.168.1.203'
+                ]);
+                $transport->setOptions($options);
+                $transport->send($mail);
+         */
+        
     }
     
     /**

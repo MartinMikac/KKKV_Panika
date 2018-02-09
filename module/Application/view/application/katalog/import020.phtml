@@ -1,0 +1,26 @@
+<?= $this->flashMessenger()->render('error', ['alert', 'alert-warning']); ?>
+<?= $this->flashMessenger()->render('success', ['alert', 'alert-success']); ?>
+<?= $this->flashMessenger()->render('info', ['alert', 'alert-info']); ?>
+
+<h3>Příprava dat pro reimport pole 020 </h3>
+
+
+
+<h5>Přehozené podpole <strong>c</strong> a  <strong>a</strong> </h5>
+<?php
+foreach ($this->for_repair as $line => $row) {
+    echo '<strong class="mr-5">' . $line . '</strong>';
+    echo $row;
+    echo "<br/>";
+}
+?>        
+
+
+<h5 class="mt-5">Finální data pro import</h5>
+<?php
+foreach ($this->transformed_lines as $line => $row) {
+
+    echo $row;
+    echo "<br/>";
+}
+?>        

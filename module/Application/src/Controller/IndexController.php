@@ -14,9 +14,9 @@ use Zend\View\Model\JsonModel;
 //use Application\Entity\Online;
 use Application\Entity\User;
 use Application\Entity\Setting;
+use Application\Entity\UserSmsList;
 use User\Service\UserManager;
 use Zend\Mail;
-//use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp as SmtpTransport;
 use Zend\Mail\Transport\SmtpOptions;
 use Application\Service\CSendSMS;
@@ -209,37 +209,64 @@ class IndexController extends AbstractActionController {
         /* @var $userArray \Application\Entity\Setting */
         foreach ($userOnlineSms as $userArray) {
 
-            //echo $userArray;
-            
-            $mail = new Mail\Message();
-            $mail->setBody('PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . 'telefon:' . $setting->getTelefon());
-            $mail->setFrom('mikac@knihovnakv.cz', "Miki");
-            $mail->addTo('mikac@knihovnakv.cz', "Miki");
-            $mail->setSubject('PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . 'telefon:' . $setting->getTelefon());
+            if (strlen($userArray->getEmail()) > 0) {
+                $mail = new Mail\Message();
+                $mail->setBody('PANIKA spuštěna! kdo: ' . $setting->getCeleJmeno() . ' kde: ' . $setting->getUmisteni() . ' telefon: ' . $setting->getTelefon());
+                $mail->setFrom('mikac@knihovnakv.cz', "Miki");
+                $mail->addTo($userArray->getEmail());
+                $mail->setSubject('PANIKA spuštěna! kdo: ' . $setting->getCeleJmeno() . ' kde: ' . $setting->getUmisteni() . ' telefon: ' . $setting->getTelefon());
 
-            //$transport = new Mail\Transport\Sendmail();
-            //$transport->send($mail);
-            // Setup SMTP transport using LOGIN authentication
-            $transport = new SmtpTransport();
-            $options = new SmtpOptions([
-                'name' => 'mail.knihovnakv.cz',
-                'host' => '192.168.1.203',
-                'connection_class' => 'login',
-                'connection_config' => [
-                    'username' => 'mikac',
-                    'password' => 'Hellmaker007',
-                ],
-            ]);
-            $transport->setOptions($options);
-            //$transport->send($mail);
 
-            $sms = new CSendSMS();
-            $sms->Connect('knihovnakv', 'smsheslo256', '615dd9914f1570362f058e03036bcfda');
-            $sms->SendSMS('420' . $userArray->getTelefon(), 'PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . ' telefon:' . $setting->getTelefon(), 1, 'Panika KKKV');
+                $transport = new SmtpTransport();
+                $options = new SmtpOptions([
+                    'name' => 'mail.knihovnakv.cz',
+                    'host' => '192.168.1.203'
+                ]);
+                $transport->setOptions($options);
+                $transport->send($mail);
+            }
 
-            $sms->Disconnect();
+            if (strlen($userArray->getTelefon()) > 0) {
+                $sms = new CSendSMS();
+                $sms->Connect('knihovnakv', 'smsheslo256', '615dd9914f1570362f058e03036bcfda');
+                $sms->SendSMS('420' . $userArray->getTelefon(), 'PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde:' . $setting->getUmisteni() . ' telefon:' . $setting->getTelefon() . ' - System paniky KKKV', 1, 'Panika KKKV');
+
+                $sms->Disconnect();
+            }
         }
 
+        $userSmsList = $this->entityManager->getRepository(UserSmsList::class)->findAll();
+
+        foreach ($userSmsList as $userArray) {
+
+            if (strlen($userArray->getEmail()) > 0) {
+                $mail = new Mail\Message();
+                $mail->setBody('PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde: ' . $setting->getUmisteni() . ' telefon: ' . $setting->getTelefon());
+                $mail->setFrom('mikac@knihovnakv.cz', "Miki");
+                $mail->addTo($userArray->getEmail());
+                $mail->setSubject('PANIKA spuštěna! kdo:' . $setting->getCeleJmeno() . ' kde: ' . $setting->getUmisteni() . ' telefon: ' . $setting->getTelefon());
+
+
+                $transport = new SmtpTransport();
+                $options = new SmtpOptions([
+                    'name' => 'mail.knihovnakv.cz',
+                    'host' => '192.168.1.203'
+                ]);
+                $transport->setOptions($options);
+                $transport->send($mail);
+            }
+
+            if (strlen($userArray->getTelefon()) > 0) {
+                $sms = new CSendSMS();
+                $sms->Connect('knihovnakv', 'smsheslo256', '615dd9914f1570362f058e03036bcfda');
+                $sms->SendSMS('420' . $userArray->getTelefon(), 'PANIKA spuštěna! kdo: ' . $setting->getCeleJmeno() . ' kde: ' . $setting->getUmisteni() . ' telefon: ' . $setting->getTelefon() . ' - System paniky KKKV', 1, 'Panika KKKV');
+
+                $sms->Disconnect();
+            }
+        }
+
+        //$this->flashMessenger()->addSuccessMessage('Panika spuštěna!');
+        $this->flashMessenger()->addErrorMessage('Panika spuštěna!');
 
         return $this->redirect()->toRoute('home');
     }
@@ -285,6 +312,82 @@ class IndexController extends AbstractActionController {
         /* @var $alertManager \Application\Service\AlertManager */
         $alertManager = $this->alertManager;
         $alertManager->closeAlert($id_user, $id);
+
+
+
+        /* @var $userRepository \Application\Repository\UserRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+
+        /* @var $user \Application\Entity\User */
+        $userOnlineSms = $userRepository->NajdiOnlineProSMSUsers();
+
+        /* @var $settingRepository \Application\Repository\SettingRepository */
+        $settingRepository = $this->entityManager->getRepository(Setting::class);
+
+        /* @var $setting \Application\Entity\Setting */
+        $setting = $settingRepository->NajdiNastaveniDleIdUser($user->getId());
+
+        /* @var $userArray \Application\Entity\Setting */
+        foreach ($userOnlineSms as $userArray) {
+
+            if (strlen($userArray->getEmail()) > 0) {
+                $mail = new Mail\Message();
+                $mail->setBody('PANIKA incident UKONCEN! ukoncil: ' . $setting->getCeleJmeno() . ' telefon: ' . $setting->getTelefon() . ' - System paniky KKKV');
+                $mail->setFrom('mikac@knihovnakv.cz', "Miki");
+                $mail->addTo($userArray->getEmail());
+                $mail->setSubject('PANIKA incident UKONCEN! ukoncil: ' . $setting->getCeleJmeno() . ' - System paniky KKKV');
+
+
+                $transport = new SmtpTransport();
+                $options = new SmtpOptions([
+                    'name' => 'mail.knihovnakv.cz',
+                    'host' => '192.168.1.203'
+                ]);
+                $transport->setOptions($options);
+                $transport->send($mail);
+            }
+
+            if (strlen($userArray->getTelefon()) > 0) {
+                $sms = new CSendSMS();
+                $sms->Connect('knihovnakv', 'smsheslo256', '615dd9914f1570362f058e03036bcfda');
+                $sms->SendSMS('420' . $userArray->getTelefon(), 'PANIKA incident UKONCEN! ukoncil:' . $setting->getCeleJmeno() . ' - System paniky KKKV', 1, 'Panika KKKV');
+
+                $sms->Disconnect();
+            }
+        }
+
+        $userSmsList = $this->entityManager->getRepository(UserSmsList::class)->findAll();
+
+        foreach ($userSmsList as $userArray) {
+
+            if (strlen($userArray->getEmail()) > 0) {
+                $mail = new Mail\Message();
+                $mail->setBody('PANIKA incident UKONCEN! ukoncil: ' . $setting->getCeleJmeno() . ' - System paniky KKKV');
+                $mail->setFrom('mikac@knihovnakv.cz', "Miki");
+                $mail->addTo($userArray->getEmail());
+                $mail->setSubject('PANIKA incident UKONCEN! ukoncil: ' . $setting->getCeleJmeno() . ' - System paniky KKKV');
+
+
+                $transport = new SmtpTransport();
+                $options = new SmtpOptions([
+                    'name' => 'mail.knihovnakv.cz',
+                    'host' => '192.168.1.203'
+                ]);
+                $transport->setOptions($options);
+                $transport->send($mail);
+            }
+
+            if (strlen($userArray->getTelefon()) > 0) {
+                $sms = new CSendSMS();
+                $sms->Connect('knihovnakv', 'smsheslo256', '615dd9914f1570362f058e03036bcfda');
+                $sms->SendSMS('420' . $userArray->getTelefon(), 'PANIKA incident UKONCEN! ukoncil: ' . $setting->getCeleJmeno() . ' - System paniky KKKV', 1, 'Panika KKKV');
+
+                $sms->Disconnect();
+            }
+        }
+        $this->flashMessenger()->addSuccessMessage('Panika - incident ukončen!');
+
+
 
         return $this->redirect()->toRoute('home');
     }

@@ -29,7 +29,7 @@ $form->get('password')->setAttributes([
             <h2 class="form-signin-heading">Prosím přihlašte se</h2>
             <?php if ($isLoginError): ?>
             <div class="alert alert-warning" role="alert">
-                Incorrect login and/or password. 
+                Špatné jméno nebo heslo
                 <a href="<?= $this->url('reset-password') ?>">Zapoměli jste heslo?</a>
             </div>
             <?php endif; ?>
@@ -44,7 +44,7 @@ $form->get('password')->setAttributes([
             </div>
             <?= $this->formElement($form->get('redirect_url')); ?>
             <?= $this->formElement($form->get('csrf')) ?>
-            <button class="btn btn-lg btn-primary btn-block" id="poslat" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block" id="poslat" type="submit">Přihlásit se</button>
         </form>
     </div>
 </div>

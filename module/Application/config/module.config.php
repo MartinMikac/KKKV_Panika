@@ -115,6 +115,16 @@ return [
                     ],
                 ],
             ],
+            'import-020' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/katalogizace/import-020',
+                    'defaults' => [
+                        'controller' => Controller\KatalogController::class,
+                        'action' => 'import020',
+                    ],
+                ],
+            ],
             'application' => [
                 'type' => Segment::class,
                 'options' => [
@@ -142,6 +152,7 @@ return [
             Controller\LoginController::class => InvokableFactory::class,
             Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
             Controller\SettingController::class => Controller\Factory\SettingControllerFactory::class,
+            Controller\KatalogController::class => Controller\Factory\KatalogControllerFactory::class,
         ],
     ],
     'service_manager' => [
@@ -169,7 +180,7 @@ return [
         'controllers' => [
             Controller\IndexController::class => [
                 // Allow anyone to visit "index" and "about" actions
-                ['actions' => ['index', 'about', 'ajax'], 'allow' => '*'],
+                //['actions' => ['index', 'about', 'ajax'], 'allow' => '*'],
                 // Allow authorized users to visit "settings" action
                 ['actions' => ['index', 'about', 'ajax', 'checkAlert', 'alert', 'settings', 'alertOver', 'panika'], 'allow' => '@']
             ],
@@ -178,6 +189,12 @@ return [
                 ['actions' => ['index'], 'allow' => '+profile.own.edit'],
                 ['actions' => '*', 'allow' => '+permission.manage']
             ],
+            Controller\KatalogController::class => [
+                // Allow anyone to visit "index" and "about" actions
+                //['actions' => ['index', 'about', 'ajax'], 'allow' => '*'],
+                // Allow authorized users to visit "settings" action
+                ['actions' => ['import020'], 'allow' => '@']
+            ],            
         ]
     ],
     // This key stores configuration for RBAC manager.

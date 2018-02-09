@@ -77,7 +77,7 @@ class PasswordResetForm extends Form
             'type'  => 'submit',
             'name' => 'submit',
             'attributes' => [                
-                'value' => 'Reset Password',
+                'value' => 'resetovat heslo',
                 'id' => 'submit',
             ],
         ]);       

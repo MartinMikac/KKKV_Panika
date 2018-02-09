@@ -45,7 +45,7 @@ class PasswordChangeForm extends Form
                 'type'  => 'password',
                 'name' => 'old_password',
                 'options' => [
-                    'label' => 'Old Password',
+                    'label' => 'Staré heslo',
                 ],
             ]);       
         }
@@ -55,7 +55,7 @@ class PasswordChangeForm extends Form
             'type'  => 'password',
             'name' => 'new_password',
             'options' => [
-                'label' => 'New Password',
+                'label' => 'Nové heslo',
             ],
         ]);
         
@@ -64,7 +64,7 @@ class PasswordChangeForm extends Form
             'type'  => 'password',
             'name' => 'confirm_new_password',
             'options' => [
-                'label' => 'Confirm new password',
+                'label' => 'Potvrdit nové heslo',
             ],
         ]);
         
@@ -84,7 +84,7 @@ class PasswordChangeForm extends Form
             'type'  => 'submit',
             'name' => 'submit',
             'attributes' => [                
-                'value' => 'Change Password'
+                'value' => 'Změnit heslo'
             ],
         ]);
     }
